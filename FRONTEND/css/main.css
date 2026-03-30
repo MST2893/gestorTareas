@@ -1,0 +1,291 @@
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('../fonts/RobotoCondensed-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    text-align: center;
+}
+h1 {
+    font-size: 50px;
+    font-family: 'Roboto Condensed';
+    text-aligh: center;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-left: 400px;
+    margin-right: 400px;
+    text-align: center;
+}
+
+.card {
+        border: 1px solid #c6c6c6;
+        border-radius: 14px;
+        padding: 14px;
+        background: #ffffff;
+        overflow: hidden;
+        transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, border-width 0.25s ease;
+      }
+
+.card:hover {
+        border: 3px solid #ffee00;
+        box-shadow: inset 0px 0px 10px rgba(255, 217, 0, 0.5), 0px 0px 10px rgba(255, 217, 0, 0.5);
+        background: #fffffa;
+      }
+
+.titulotarjeta {
+    font-family: 'Roboto Condensed';
+    font-size: 25px;
+    text-align: left;
+    margin-bottom: 5px;
+    }
+
+.categoriatarea {
+    font-family: 'Roboto Condensed';
+    font-size: 20px;
+    text-align: left;
+    color: #555;
+    margin-top: 1px;
+}
+
+.descripciontarea {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    text-align: left;
+    color: #000000;
+}
+
+.prioridadtarea {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    text-align: left;
+    color: #333;
+    }
+
+.boton-eliminar {
+    font-family: 'Roboto Condensed';
+    margin-top: 10px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #ff0000;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.20s ease, color 0.20s ease;
+}
+
+.boton-eliminar:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+.boton-editar, .boton-guardar {
+    font-family: 'Roboto Condensed';
+    margin-top: 10px;
+    margin-left: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #28a745;
+    border: 1px solid #1c7d33;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.20s ease, color 0.20s ease;
+}
+
+.boton-editar:hover, .boton-guardar:hover {
+    background-color: #218838;
+}
+
+.boton-cancelar-edicion {
+    font-family: 'Roboto Condensed';
+    margin-top: 10px;
+    margin-left: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #6c757d;
+    border: 1px solid #565e64;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.20s ease, color 0.20s ease;
+}
+
+.boton-cancelar-edicion:hover {
+    background-color: #5a6268;
+}
+
+.titulo-input,
+.descripcion-input,
+.prioridad-select,
+.categoria-select {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    width: calc(100% - 16px);
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.boton-cargar-mas {
+    font-family: 'Roboto Condensed';
+    text-align: center;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 0px 6px;
+    font-size: 30px;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #007510;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.20s ease, color 0.20s ease;
+}
+
+.boton-cargar-mas:hover {
+    background-color: #187800;
+    color: #ffffff;
+}
+
+/*.card h3 {
+    margin: 10px 0 6px;
+    font-size: 16px;
+    }
+*/
+.muted {
+        font-family: 'Roboto Condensed';
+        font-style: italic;
+        color: #555;
+      }
+
+#form-section {
+    margin: 0;
+    background-color: #ffffff;
+    border: 1px solid #006f0f;
+    border-radius: 14px;
+    padding: 20px;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, border-width 0.25s ease;
+    
+}
+
+.tituloagregartarea {
+    margin: 10px;
+    padding-bottom: 20px;
+    font-family: 'Roboto Condensed';
+    font-size: 24px;
+    text-align: center;
+}
+
+#form-section:hover {
+    background-color: #f2fff3;
+    border: 1px solid #006f0f;
+    box-shadow: inset 0px 0px 10px rgba(0, 142, 19, 0.5), 0px 0px 10px rgba(0, 136, 18, 0.5);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.tituloagregartarea {
+    font-family: 'Roboto Condensed';
+    font-size: 30px;
+    text-align: center;
+    /*margin-bottom: 20px;*/
+}
+
+.titulo-input {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #b6b6b6;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.descripcion-input {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #b6b6b6;
+    border-radius: 5px;
+    width: 35%;
+    margin-top: 5px;
+}
+
+#categoria-select {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    padding: 5px;
+    border: 1px solid #b6b6b6;
+    border-radius: 5px;
+    width: 35%;
+    margin-top: 5px;
+}
+
+#prioridad-select {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    padding: 5px;
+    border: 1px solid #b6b6b6;
+    border-radius: 5px;
+    width: 20%;
+}
+
+.botones-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.botones-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.enviartarea-btn {
+    font-family: 'Roboto Condensed';
+    margin-top: 10px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #009d1d;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.20s ease, color 0.20s ease;
+}
+
+.enviartarea-btn:hover {
+    color: #ffffff;
+    background-color: #00750a;
+}
+
+.cancelaragregado-btn {
+    font-family: 'Roboto Condensed';
+    margin-top: 10px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #ee6300;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background-color 0.20s ease, color 0.20s ease;
+}
+
+.cancelaragregado-btn:hover {
+    background-color: #ff6a00;
+    color: #ffffff;
+}
