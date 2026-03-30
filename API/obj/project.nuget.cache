@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9u3y2X0HCQs=",
+  "dgSpecHash": "PgpNiL/Rngo=",
   "success": true,
-  "projectFilePath": "C:\\PROGRAMACION\\APITEST\\APITEST.csproj",
+  "projectFilePath": "C:\\PROGRAMACION\\gestorTareas\\API\\APITEST.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mattn\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\mattn\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\PROGRAMACION\\APITEST\\APITEST.csproj": {}
+    "C:\\PROGRAMACION\\gestorTareas\\API\\APITEST.csproj": {}
   },
   "projects": {
-    "C:\\PROGRAMACION\\APITEST\\APITEST.csproj": {
+    "C:\\PROGRAMACION\\gestorTareas\\API\\APITEST.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\PROGRAMACION\\APITEST\\APITEST.csproj",
+        "projectUniqueName": "C:\\PROGRAMACION\\gestorTareas\\API\\APITEST.csproj",
         "projectName": "APITEST",
-        "projectPath": "C:\\PROGRAMACION\\APITEST\\APITEST.csproj",
+        "projectPath": "C:\\PROGRAMACION\\gestorTareas\\API\\APITEST.csproj",
         "packagesPath": "C:\\Users\\mattn\\.nuget\\packages\\",
-        "outputPath": "C:\\PROGRAMACION\\APITEST\\obj\\",
+        "outputPath": "C:\\PROGRAMACION\\gestorTareas\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mattn\\AppData\\Roaming\\NuGet\\NuGet.Config"
