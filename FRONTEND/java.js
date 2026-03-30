@@ -1,5 +1,7 @@
 import { cargarTarjetasTareas } from './F_cargarTarjetasTareas.js';
 
+import { API_URL } from './api_urls.js';
+
 // ACA ESTABA LA DECLARACION DE LA API URL
 
 // ACA ESTABA LA DECLARACION DE LA F SET STATUS
@@ -11,6 +13,11 @@ import { cargarTarjetasTareas } from './F_cargarTarjetasTareas.js';
 // CREO QUE ACA ESTABA LA DECLARACION DE LA FUNCION DE CARGAR TARJETAS TAREAS
 
 //cargarTarjetasTareas();
+const formStatus = document.getElementById('form-status');
+const btnCerrarStatus = document.getElementById('btn-cerrar-status');
+btnCerrarStatus.addEventListener('click', () => {
+    formStatus.classList.remove('active');
+});
 
 const cargandoTarjetasExito = await cargarTarjetasTareas();
 
@@ -25,6 +32,8 @@ const cargandoTarjetasExito = await cargarTarjetasTareas();
 // FIJARME QUE CARGA BIEN LAS TAREAS E IGUAL ME DICE "NO SE PUDO CARGAR LAS TAREAS"
 
 if (cargandoTarjetasExito) {
+
+  //overlaySombra.classList.add('active');
 
 const seccargarmas = document.querySelector('#sec-cargarmas');
 
@@ -133,5 +142,6 @@ const botonCargarMas = document.createElement('button');
     });
 
   } else {
+    //overlaySombra.style.display = 'block';
     console.log('Tareas no se pudieron cargar');
   }

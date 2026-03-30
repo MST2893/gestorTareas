@@ -1,3 +1,5 @@
+import { mostrarVentana } from './F_showWindow.js';
+
 // Asigna al elemento HTML una variable para su manipulación.
 
 const statusText = document.querySelector('#status');
@@ -7,5 +9,6 @@ const statusText = document.querySelector('#status');
 export function setStatus(message) {
 
   statusText.textContent = message;
-  
+  mostrarVentana();
+
 }
