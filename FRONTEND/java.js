@@ -10,7 +10,9 @@ import { cargarTarjetasTareas } from './F_cargarTarjetasTareas.js';
 
 // CREO QUE ACA ESTABA LA DECLARACION DE LA FUNCION DE CARGAR TARJETAS TAREAS
 
-cargarTarjetasTareas();
+//cargarTarjetasTareas();
+
+const cargandoTarjetasExito = await cargarTarjetasTareas();
 
 // Chequea si se cargaron las tareas
 
@@ -21,6 +23,8 @@ cargarTarjetasTareas();
 // Lo mismo con editar tarea.
 
 // FIJARME QUE CARGA BIEN LAS TAREAS E IGUAL ME DICE "NO SE PUDO CARGAR LAS TAREAS"
+
+if (cargandoTarjetasExito) {
 
 const seccargarmas = document.querySelector('#sec-cargarmas');
 
@@ -53,7 +57,7 @@ const botonCargarMas = document.createElement('button');
             <button class="enviartarea-btn" id="enviar-btn">Cargar</button>
           </div>
         `;
-        grid.insertBefore(section, botonCargarMas);
+        seccargarmas.insertBefore(section, botonCargarMas);
         botonCargarMas.style.display = 'none';
 
         const categoriaSelect = document.getElementById('categoria-select');
@@ -127,3 +131,7 @@ const botonCargarMas = document.createElement('button');
         }
       }
     });
+
+  } else {
+    console.log('Tareas no se pudieron cargar');
+  }
