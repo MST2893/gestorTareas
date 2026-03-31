@@ -28,6 +28,9 @@ public class Tarea
     //[NotMapped]
     [JsonIgnore]
     public string Resumen {get;set;}
+
+    [JsonIgnore]
+    public virtual ICollection<TareaUsuariosRel> TareaUsuariosR {get;set;}
 }
 
 public enum Prioridad

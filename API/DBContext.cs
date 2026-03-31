@@ -58,6 +58,26 @@ public class TareasContext: DbContext
 
         });
 
+        modelBuilder.Entity<Usuario>(usuario=>
+        {
+            usuario.ToTable("Usuario");
+            usuario.HasKey(p=> p.UsuarioId);
+
+            usuario.Property(p=> p.Nombre).IsRequired().HasMaxLength(150);
+
+            usuario.Property(p=> p.Email).IsRequired().HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<TareaUsuariosRel>(tareaUsuario=>
+        {
+            tareaUsuario.ToTable("TareaUsuariosRel");
+            tareaUsuario.HasKey(p=> new { p.TareaId, p.UsuarioId });
+
+            tareaUsuario.HasOne(p=> p.Tarea).WithMany(p=> p.TareaUsuariosR).HasForeignKey(p=> p.TareaId);
+            tareaUsuario.HasOne(p=> p.Usuario).WithMany(p=> p.TareaUsuariosR).HasForeignKey(p=> p.UsuarioId);
+        });
+
+
     }
 
 }

@@ -92,7 +92,7 @@ namespace APITEST.Migrations
                         {
                             TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb410"),
                             CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
-                            FechaCreacion = new DateTime(2026, 3, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaCreacion = new DateTime(2026, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 1,
                             Titulo = "Pago de servicios publicos"
                         },
@@ -100,10 +100,46 @@ namespace APITEST.Migrations
                         {
                             TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb411"),
                             CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb402"),
-                            FechaCreacion = new DateTime(2026, 3, 27, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaCreacion = new DateTime(2026, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 0,
                             Titulo = "Terminar de ver pelicula en netflix"
                         });
+                });
+
+            modelBuilder.Entity("APITEST.Models.TareaUsuariosRel", b =>
+                {
+                    b.Property<Guid>("TareaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TareaId", "UsuarioId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("TareaUsuariosRel", (string)null);
+                });
+
+            modelBuilder.Entity("APITEST.Models.Usuario", b =>
+                {
+                    b.Property<Guid>("UsuarioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("UsuarioId");
+
+                    b.ToTable("Usuario", (string)null);
                 });
 
             modelBuilder.Entity("APITEST.Models.Tarea", b =>
@@ -117,9 +153,38 @@ namespace APITEST.Migrations
                     b.Navigation("Categoria");
                 });
 
+            modelBuilder.Entity("APITEST.Models.TareaUsuariosRel", b =>
+                {
+                    b.HasOne("APITEST.Models.Tarea", "Tarea")
+                        .WithMany("TareaUsuariosR")
+                        .HasForeignKey("TareaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APITEST.Models.Usuario", "Usuario")
+                        .WithMany("TareaUsuariosR")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tarea");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("APITEST.Models.Categoria", b =>
                 {
                     b.Navigation("Tareas");
+                });
+
+            modelBuilder.Entity("APITEST.Models.Tarea", b =>
+                {
+                    b.Navigation("TareaUsuariosR");
+                });
+
+            modelBuilder.Entity("APITEST.Models.Usuario", b =>
+                {
+                    b.Navigation("TareaUsuariosR");
                 });
 #pragma warning restore 612, 618
         }
