@@ -58,6 +58,23 @@ public class TareasContext: DbContext
 
         });
 
+
+        List<Usuario> usuariosInit = new List<Usuario>();
+
+        usuariosInit.Add(new Usuario()
+        {
+            UsuarioId = Guid.Parse("557c32cb-aefb-4fe9-a402-48e3de0828eb"),
+            Nombre = "Matías",
+            Email = "matias@test.com"
+        });
+
+        usuariosInit.Add(new Usuario()
+        {
+            UsuarioId = Guid.Parse("01c8921f-5b16-4895-abb4-4436fa7338b5"),
+            Nombre = "Juan",
+            Email = "juan@test.com"
+        });
+
         modelBuilder.Entity<Usuario>(usuario=>
         {
             usuario.ToTable("Usuario");
@@ -66,6 +83,23 @@ public class TareasContext: DbContext
             usuario.Property(p=> p.Nombre).IsRequired().HasMaxLength(150);
 
             usuario.Property(p=> p.Email).IsRequired().HasMaxLength(200);
+
+            usuario.HasData(usuariosInit);
+        });
+
+
+        List<TareaUsuariosRel> tareaUsuariosInit = new List<TareaUsuariosRel>();
+
+        tareaUsuariosInit.Add(new TareaUsuariosRel()
+        {
+            TareaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb410"), // tarea 1
+            UsuarioId = Guid.Parse("557c32cb-aefb-4fe9-a402-48e3de0828eb") // Matías
+        });
+
+        tareaUsuariosInit.Add(new TareaUsuariosRel()
+        {
+            TareaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb410"), // tarea 1
+            UsuarioId = Guid.Parse("01c8921f-5b16-4895-abb4-4436fa7338b5") // Juan
         });
 
         modelBuilder.Entity<TareaUsuariosRel>(tareaUsuario=>
@@ -75,6 +109,8 @@ public class TareasContext: DbContext
 
             tareaUsuario.HasOne(p=> p.Tarea).WithMany(p=> p.TareaUsuariosR).HasForeignKey(p=> p.TareaId);
             tareaUsuario.HasOne(p=> p.Usuario).WithMany(p=> p.TareaUsuariosR).HasForeignKey(p=> p.UsuarioId);
+
+            tareaUsuario.HasData(tareaUsuariosInit);
         });
 
 

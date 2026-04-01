@@ -55,6 +55,14 @@ h1 {
     margin-top: 1px;
 }
 
+.hacedortarea {
+    font-family: 'Roboto Condensed';
+    font-size: 14px;
+    text-align: left;
+    color: #007007;
+    margin-top: 1px;
+}
+
 .descripciontarea {
     font-family: 'Roboto Condensed';
     font-size: 14px;

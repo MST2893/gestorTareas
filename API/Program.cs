@@ -97,4 +97,15 @@ app.MapPut("/api/edicion", async ([FromServices] TareasContext dbContext, [FromB
     return Results.NotFound();   
 });
 
+app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext) =>
+{
+    var tareas = await dbContext.Tareas
+        .Include(t => t.Categoria)
+        .Include(t => t.TareaUsuariosR)                // <- tabla intermedia
+            .ThenInclude(rel => rel.Usuario)          // <- usuario asignado
+        .ToListAsync();
+
+    return Results.Ok(tareas);
+});
+
 app.Run();

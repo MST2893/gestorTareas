@@ -119,6 +119,18 @@ namespace APITEST.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("TareaUsuariosRel", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb410"),
+                            UsuarioId = new Guid("557c32cb-aefb-4fe9-a402-48e3de0828eb")
+                        },
+                        new
+                        {
+                            TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb410"),
+                            UsuarioId = new Guid("01c8921f-5b16-4895-abb4-4436fa7338b5")
+                        });
                 });
 
             modelBuilder.Entity("APITEST.Models.Usuario", b =>
@@ -140,6 +152,20 @@ namespace APITEST.Migrations
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuario", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UsuarioId = new Guid("557c32cb-aefb-4fe9-a402-48e3de0828eb"),
+                            Email = "matias@test.com",
+                            Nombre = "Matías"
+                        },
+                        new
+                        {
+                            UsuarioId = new Guid("01c8921f-5b16-4895-abb4-4436fa7338b5"),
+                            Email = "juan@test.com",
+                            Nombre = "Juan"
+                        });
                 });
 
             modelBuilder.Entity("APITEST.Models.Tarea", b =>

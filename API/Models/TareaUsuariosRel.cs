@@ -10,6 +10,5 @@ public class TareaUsuariosRel
     [JsonIgnore]
     public virtual Tarea Tarea {get;set;}
 
-    [JsonIgnore]
     public virtual Usuario Usuario {get;set;}
 }

@@ -29,7 +29,6 @@ public class Tarea
     [JsonIgnore]
     public string Resumen {get;set;}
 
-    [JsonIgnore]
     public virtual ICollection<TareaUsuariosRel> TareaUsuariosR {get;set;}
 }
 

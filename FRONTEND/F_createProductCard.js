@@ -21,6 +21,26 @@ export function createProductCard(tarea) {
   descripcionTarea.className = 'descripciontarea';
   descripcionTarea.textContent = `Descripción: ${tarea.descripcion || 'Sin descripción'}`;
 
+  const hacedorTarea = document.createElement('p');
+  hacedorTarea.className = 'hacedortarea';
+
+  const cantidadHacedores = tarea.tareaUsuariosR.length;
+
+  switch (cantidadHacedores) {
+    case 0:
+      hacedorTarea.textContent = 'Nadie a cargo';
+      break;
+    case 1:
+      hacedorTarea.textContent = `A cargo de: ${tarea.tareaUsuariosR[0].usuario.nombre}`;
+      break;
+      default:
+      const nombresHacedores = tarea.tareaUsuariosR.map(tu => tu.usuario.nombre).join(', ');
+      hacedorTarea.textContent = `A cargo de: ${nombresHacedores}`;
+      break;
+  }
+  //const nombreHacedor = "Pepito Pérez"; // Aquí deberías obtener el nombre real del hacedor
+  //hacedorTarea.textContent = `A cargo de: ${tarea.tareaUsuariosR[0]?.usuario.nombre || 'Nadie a cargo'}`;
+
   const prioridadTarea = document.createElement('p');
   prioridadTarea.className = 'prioridadtarea';
   const prioridadTexto = {
@@ -229,6 +249,7 @@ function desactivarModoEdicion() {
     titulo,
     inputTitulo,
     categoriaTarea,
+    hacedorTarea,
     categoriaSelect,
     descripcionTarea,
     inputDescripcion,
