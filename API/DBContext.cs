@@ -7,6 +7,9 @@ public class TareasContext: DbContext
 {
     public DbSet<Categoria> Categorias {get;set;}
     public DbSet<Tarea> Tareas {get;set;}
+    public DbSet<Usuario> Usuarios {get;set;}
+    public DbSet<TareaUsuariosRel> TareaUsuariosRels {get;set;}
+    public DbSet<AppUser> Users {get;set;}
 
     public TareasContext(DbContextOptions<TareasContext> options) :base(options) { }
 
@@ -111,6 +114,42 @@ public class TareasContext: DbContext
             tareaUsuario.HasOne(p=> p.Usuario).WithMany(p=> p.TareaUsuariosR).HasForeignKey(p=> p.UsuarioId);
 
             tareaUsuario.HasData(tareaUsuariosInit);
+        });
+
+        modelBuilder.Entity<AppUser>(entity =>
+        {
+            entity.ToTable("Users");
+
+            entity.HasKey(x => x.Id);
+
+            entity.HasIndex(x => x.GoogleSub).IsUnique();
+
+            entity.Property(x => x.GoogleSub)
+                .HasMaxLength(255)
+                .IsRequired();
+
+            entity.Property(x => x.Email)
+                .HasMaxLength(320)
+                .IsRequired();
+
+            entity.Property(x => x.FullName)
+                .HasMaxLength(200);
+
+            entity.Property(x => x.GivenName)
+                .HasMaxLength(100);
+
+            entity.Property(x => x.FamilyName)
+                .HasMaxLength(100);
+
+            entity.Property(x => x.PictureUrl)
+                .HasMaxLength(1000);
+
+            entity.Property(x => x.Locale)
+                .HasMaxLength(20);
+
+            entity.Property(x => x.Role)
+                .HasMaxLength(50)
+                .IsRequired();
         });
 
 

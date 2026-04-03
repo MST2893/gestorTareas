@@ -2,8 +2,62 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APITEST;
 using APITEST.Models;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+//using APITEST.Data;
+using APITEST.Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+var frontendOrigin = builder.Configuration["Frontend:Origin"]
+    ?? throw new InvalidOperationException("Falta Frontend:Origin.");
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy
+            .WithOrigins(frontendOrigin)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddScoped<IGoogleTokenValidator, GoogleTokenValidator>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+var jwtKey = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException("Falta Jwt:Key.");
+
+if (jwtKey.Length < 32)
+    throw new InvalidOperationException("Jwt:Key debe tener al menos 32 caracteres.");
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(1)
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 
 //builder.Services.AddDbContext<TareasContext>(p => p.UseInMemoryDatabase("TareasDB"));
 builder.Services.AddSqlServer<TareasContext>(builder.Configuration.GetConnectionString("cnTareas"));
@@ -26,11 +80,20 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 
-app.UseCors("AllowAll");
+//app.UseCors("AllowAll");
+
+app.UseHttpsRedirection();
+
+// CORS antes de auth.
+app.UseCors("Frontend");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 
-
-app.MapGet("/", () => "Tu vieja en tanga!");
+app.MapGet("/", () => "API funcionando correctamente");
 
 app.MapGet("/CargarDatabase", async ([FromServices] TareasContext dbContext) => 
 {

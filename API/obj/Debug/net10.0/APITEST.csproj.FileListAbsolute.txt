@@ -311,3 +311,9 @@ C:\PROGRAMACION\gestorTareas\API\obj\Debug\net10.0\refint\APITEST.dll
 C:\PROGRAMACION\gestorTareas\API\obj\Debug\net10.0\APITEST.pdb
 C:\PROGRAMACION\gestorTareas\API\obj\Debug\net10.0\APITEST.genruntimeconfig.cache
 C:\PROGRAMACION\gestorTareas\API\obj\Debug\net10.0\ref\APITEST.dll
+C:\PROGRAMACION\gestorTareas\API\bin\Debug\net10.0\Google.Apis.dll
+C:\PROGRAMACION\gestorTareas\API\bin\Debug\net10.0\Google.Apis.Auth.dll
+C:\PROGRAMACION\gestorTareas\API\bin\Debug\net10.0\Google.Apis.Core.dll
+C:\PROGRAMACION\gestorTareas\API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\PROGRAMACION\gestorTareas\API\bin\Debug\net10.0\System.Management.dll
+C:\PROGRAMACION\gestorTareas\API\bin\Debug\net10.0\runtimes\win\lib\net7.0\System.Management.dll

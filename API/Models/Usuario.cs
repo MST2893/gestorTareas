@@ -4,9 +4,14 @@ namespace APITEST.Models;
 
 public class Usuario
 {
+    public Usuario()
+    {
+        TareaUsuariosR = new List<TareaUsuariosRel>();
+    }
+
     public Guid UsuarioId {get;set;}
-    public string Nombre {get;set;}
-    public string Email {get;set;}
+    public string? Nombre {get;set;}
+    public string? Email {get;set;}
 
     [JsonIgnore]
     public virtual ICollection<TareaUsuariosRel> TareaUsuariosR {get;set;}

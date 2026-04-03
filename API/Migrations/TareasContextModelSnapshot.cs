@@ -22,6 +22,66 @@ namespace APITEST.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("APITEST.Models.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("nvarchar(320)");
+
+                    b.Property<bool>("EmailVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FamilyName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FullName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("GivenName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("GoogleSub")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("LastLoginAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Locale")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PictureUrl")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GoogleSub")
+                        .IsUnique();
+
+                    b.ToTable("Users", (string)null);
+                });
+
             modelBuilder.Entity("APITEST.Models.Categoria", b =>
                 {
                     b.Property<Guid>("CategoriaId")
@@ -92,7 +152,7 @@ namespace APITEST.Migrations
                         {
                             TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb410"),
                             CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
-                            FechaCreacion = new DateTime(2026, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaCreacion = new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 1,
                             Titulo = "Pago de servicios publicos"
                         },
@@ -100,7 +160,7 @@ namespace APITEST.Migrations
                         {
                             TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb411"),
                             CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb402"),
-                            FechaCreacion = new DateTime(2026, 3, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaCreacion = new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 0,
                             Titulo = "Terminar de ver pelicula en netflix"
                         });

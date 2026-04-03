@@ -8,7 +8,7 @@ public class TareaUsuariosRel
     public Guid UsuarioId {get;set;}
 
     [JsonIgnore]
-    public virtual Tarea Tarea {get;set;}
+    public virtual Tarea? Tarea {get;set;}
 
-    public virtual Usuario Usuario {get;set;}
+    public virtual Usuario? Usuario {get;set;}
 }
