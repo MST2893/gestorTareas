@@ -3,27 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de tareas</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>¡Bienvenido! - Gestor de Tareas</title>
+    <link rel="stylesheet" href="css/app/index.css">
 </head>
 <body>
-    <h1>Estas son las tareas a realizar</h1>
-    <div class="grid" id="grid-tareas"></div>
-    <div class="sec-cargarmas" id="sec-cargarmas"></div>
-    <!-- <div class="overlaysombra" id="overlay-sombra">-->
-        <div class="formstatus" id="form-status">
-            <p class="muted" id="status"></p>
-            <button class="btn-cerrar-status" id="btn-cerrar-status">Cerrar</button>
-        <!--</div>-->
-    </div>
-    <h1>Login Google</h1>
+    
+    <main>
+        <section>
+            <h3>GESTOR DE TAREAS</h3>
+            <h1>Inicie sesión con Google</h1>
+            <div id="googleButton"></div>
+            <pre id="result"></pre>
+        </section>
+    </main>
+    
 
-  <div id="googleButton"></div>
-
-  <pre id="result"></pre>
-
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="./auth.js"></script>
-    <script type="module" src="./java.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="./js/index/auth.js"></script>
 </body>
 </html>
