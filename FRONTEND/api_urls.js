@@ -1,1 +1,1 @@
-export const API_URL = 'http://127.0.0.1:5026/api/tareasyusuario/';
+export const API_URL = 'http://32ram.com.ar:5026/api/tareasyusuario/';

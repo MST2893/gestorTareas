@@ -81,7 +81,7 @@ export function createProductCard(tarea) {
   async function cargarCategoriasParaEdicion() {
     if (categoriasCargadas) return;
     try {
-      const res = await fetch('http://localhost:5026/api/categorias');
+      const res = await fetch('http://32ram.com.ar:5026/api/categorias');
       const categorias = await res.json();
       categoriaSelect.innerHTML = '';
       if (!Array.isArray(categorias) || categorias.length === 0) {
@@ -195,7 +195,7 @@ function desactivarModoEdicion() {
     }
 
     try {
-      const response = await fetch('http://localhost:5026/api/edicion', {
+      const response = await fetch('http://32ram.com.ar:5026/api/edicion', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosActualizados)

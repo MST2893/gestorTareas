@@ -70,7 +70,7 @@ const botonCargarMas = document.createElement('button');
         botonCargarMas.style.display = 'none';
 
         const categoriaSelect = document.getElementById('categoria-select');
-        fetch('http://localhost:5026/api/categorias')
+        fetch('http://32ram.com.ar:5026/api/categorias')
           .then(res => res.json())
           .then(categorias => {
             console.log('Categorías recibidas:', categorias);

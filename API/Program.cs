@@ -16,16 +16,16 @@ builder.Services.AddControllers();
 var frontendOrigin = builder.Configuration["Frontend:Origin"]
     ?? throw new InvalidOperationException("Falta Frontend:Origin.");
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("Frontend", policy =>
-    {
-        policy
-            .WithOrigins(frontendOrigin)
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("Frontend", policy =>
+//    {
+//        policy
+//            .WithOrigins(frontendOrigin)
+//            .AllowAnyHeader()
+//            .AllowAnyMethod();
+//    });
+//});
 
 builder.Services.AddScoped<IGoogleTokenValidator, GoogleTokenValidator>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -64,28 +64,39 @@ builder.Services.AddSqlServer<TareasContext>(builder.Configuration.GetConnection
 
 
 //Agregado gracias a la IA del frontend
+/* builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins(
+                "http://32ram.com.ar:5500"
+                //"https://misitio.com"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+}); */
+
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowAll", cors =>
+        cors
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+    );
 });
-
-
-
 
 var app = builder.Build();
 
 
-//app.UseCors("AllowAll");
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
 // CORS antes de auth.
-app.UseCors("Frontend");
+//app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
