@@ -14,7 +14,7 @@ export async function cargarTarjetasTareas() {
 
     const response = await fetch(API_URL);
     const tareas = await response.json();
-    const firstNine = tareas.slice(0, 9);
+    //const firstNine = tareas.slice(0, 9);
     //renderizarTarjetasTareas(firstNine);
     renderizarTarjetasTareas(tareas);
 

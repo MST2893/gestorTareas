@@ -10,8 +10,10 @@ public class Usuario
     }
 
     public Guid UsuarioId {get;set;}
+    public string? GoogleSub {get;set;}
     public string? Nombre {get;set;}
     public string? Email {get;set;}
+    public int Permisos {get;set;}
 
     [JsonIgnore]
     public virtual ICollection<TareaUsuariosRel> TareaUsuariosR {get;set;}

@@ -2,6 +2,42 @@ import { cargarTarjetasTareas } from './F_cargarTarjetasTareas.js';
 
 import { API_URL } from './api_urls.js';
 
+import { getMe } from './chequeoToken.js';
+
+import { logout } from './cerrarSesion.js';
+
+//const chequeoToken = document.getElementById('chequeoToken');
+//chequeoToken.addEventListener("click", () => {
+
+//document.addEventListener("DOMContentLoaded", async () => {
+  
+  
+
+
+
+const datosUsuario = await getMe();
+
+const fotoDePerfil = document.getElementById("fotoPerfil");
+fotoDePerfil.src = datosUsuario?.pictureUrl || '/img/app_bg.jpg';
+fotoDePerfil.alt = 'Foto de perfil';
+
+const textoDeBienvenida = document.getElementById("textoBienvenida");
+textoDeBienvenida.textContent = `¡Bienvenido, ${datosUsuario?.name || datosUsuario?.email}!`;
+
+const cerrarSesionBoton = document.getElementById("cerrarSesionBtn");
+
+console.log("Botón encontrado:", cerrarSesionBoton);
+console.log("Pepito");
+
+cerrarSesionBoton.addEventListener("click", () => {
+  logout();
+  window.location.href = "index.html";
+
+  console.log("Sesión cerrada, redirigiendo a index.html");
+});
+
+//});
+
 // ACA ESTABA LA DECLARACION DE LA API URL
 
 // ACA ESTABA LA DECLARACION DE LA F SET STATUS
@@ -70,7 +106,7 @@ const botonCargarMas = document.createElement('button');
         botonCargarMas.style.display = 'none';
 
         const categoriaSelect = document.getElementById('categoria-select');
-        fetch('http://32ram.com.ar:5026/api/categorias')
+        fetch('http://localhost:5026/api/categorias')
           .then(res => res.json())
           .then(categorias => {
             console.log('Categorías recibidas:', categorias);
@@ -145,3 +181,6 @@ const botonCargarMas = document.createElement('button');
     //overlaySombra.style.display = 'block';
     console.log('Tareas no se pudieron cargar');
   }
+
+
+//});

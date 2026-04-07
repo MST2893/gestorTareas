@@ -30,6 +30,11 @@ public class Tarea
     
     public virtual Categoria? Categoria {get;set;}
 
+    public DateTime Deadline {get;set;}
+    public DateTime FechaCompletada {get;set;}
+
+    public int Estado {get;set;} //(0: Pendiente, 1: Haciendo, 3: Completada, 4: Cancelada)
+
     //[NotMapped]
     [JsonIgnore]
     public string? Resumen {get;set;}

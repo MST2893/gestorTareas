@@ -64,6 +64,9 @@ public sealed class AuthController : ControllerBase
         var user = await _dbContext.Users
             .SingleOrDefaultAsync(x => x.GoogleSub == payload.Subject, cancellationToken);
 
+        var usuario = await _dbContext.Usuarios
+            .SingleOrDefaultAsync(x => x.GoogleSub == payload.Subject, cancellationToken);
+
         if (user is null)
         {
             user = new AppUser
@@ -82,6 +85,18 @@ public sealed class AuthController : ControllerBase
             };
 
             _dbContext.Users.Add(user);
+
+            usuario = new Usuario
+            {
+                UsuarioId = Guid.NewGuid(),
+                GoogleSub = payload.Subject,
+                Email = payload.Email ?? string.Empty,
+                Nombre = payload.Name,
+                Permisos = 0
+            };
+
+            _dbContext.Usuarios.Add(usuario);
+
         }
         else
         {
@@ -142,4 +157,5 @@ public sealed class AuthController : ControllerBase
             user.PictureUrl
         });
     }
+
 }

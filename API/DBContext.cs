@@ -55,6 +55,12 @@ public class TareasContext: DbContext
 
             tarea.Property(p=> p.FechaCreacion);
 
+            tarea.Property(p=> p.FechaCompletada);
+
+            tarea.Property(p=> p.Deadline);
+
+            tarea.Property(p=> p.Estado);
+
             tarea.Ignore(p=> p.Resumen);
 
             tarea.HasData(tareasInit);
@@ -64,30 +70,19 @@ public class TareasContext: DbContext
 
         List<Usuario> usuariosInit = new List<Usuario>();
 
-        usuariosInit.Add(new Usuario()
-        {
-            UsuarioId = Guid.Parse("557c32cb-aefb-4fe9-a402-48e3de0828eb"),
-            Nombre = "Matías",
-            Email = "matias@test.com"
-        });
-
-        usuariosInit.Add(new Usuario()
-        {
-            UsuarioId = Guid.Parse("01c8921f-5b16-4895-abb4-4436fa7338b5"),
-            Nombre = "Juan",
-            Email = "juan@test.com"
-        });
 
         modelBuilder.Entity<Usuario>(usuario=>
         {
             usuario.ToTable("Usuario");
             usuario.HasKey(p=> p.UsuarioId);
 
-            usuario.Property(p=> p.Nombre).IsRequired().HasMaxLength(150);
+            usuario.Property(p=> p.GoogleSub).IsRequired();
 
-            usuario.Property(p=> p.Email).IsRequired().HasMaxLength(200);
+            usuario.Property(p=> p.Nombre).IsRequired();
 
-            usuario.HasData(usuariosInit);
+            usuario.Property(p=> p.Email).IsRequired();
+
+            usuario.Property(p=> p.Permisos).IsRequired();
         });
 
 

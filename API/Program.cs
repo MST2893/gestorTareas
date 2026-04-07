@@ -80,18 +80,20 @@ builder.Services.AddSqlServer<TareasContext>(builder.Configuration.GetConnection
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", cors =>
+    options.AddPolicy("AllowFrontend", cors =>
         cors
-            .AllowAnyOrigin()
+            //.AllowAnyOrigin()
+            .WithOrigins("http://127.0.0.1:5500")
             .AllowAnyMethod()
             .AllowAnyHeader()
+            .AllowCredentials()
     );
 });
 
 var app = builder.Build();
 
 
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 
@@ -174,6 +176,19 @@ app.MapPut("/api/edicion", async ([FromServices] TareasContext dbContext, [FromB
 app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext) =>
 {
     var tareas = await dbContext.Tareas
+        .Include(t => t.Categoria)
+        .Include(t => t.TareaUsuariosR)                // <- tabla intermedia
+            .ThenInclude(rel => rel.Usuario)          // <- usuario asignado
+        .ToListAsync();
+
+    return Results.Ok(tareas);
+});
+
+app.MapGet("/api/tareasyusuario/{mailGoogle}", async ([FromServices] TareasContext dbContext, [FromRoute] string mailGoogle) =>
+{
+    var tareas = await dbContext.Tareas
+        .Where(t => t.TareaUsuariosR
+            .Any(rel => rel.Usuario.Email == mailGoogle))
         .Include(t => t.Categoria)
         .Include(t => t.TareaUsuariosR)                // <- tabla intermedia
             .ThenInclude(rel => rel.Usuario)          // <- usuario asignado

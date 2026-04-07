@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://32ram.com.ar:5026"; // cambie el puerto
+const API_BASE_URL = "http://localhost:5026"; // cambie el puerto
 const GOOGLE_CLIENT_ID = "171373192496-4md3aek436pl7541fku9h5icsmpfse7e.apps.googleusercontent.com";
 
 const resultEl = document.getElementById("result");
@@ -49,9 +49,17 @@ async function handleGoogleCredentialResponse(response) {
     localStorage.setItem("access_token", data.accessToken);
     localStorage.setItem("user", JSON.stringify(data.user));
 
-    resultEl.textContent = JSON.stringify(data, null, 2);
+    // EXITO EN EL LOGIN, TE ENVIA A LA APP
+    window.location.href = "app.html";
 
-    alert(`Bienvenido ${data.user.name ?? data.user.email}`);
+    resultEl.textContent = JSON.stringify(data, null, 2);
+    
+    
+
+    console.log(`Bienvenido ${data.user.name ?? data.user.email}`);
+
+
+    //alert(`Bienvenido ${data.user.name ?? data.user.email}`);
   } catch (error) {
     console.error(error);
     alert("Error de red al iniciar sesión.");
@@ -62,6 +70,7 @@ async function getMe() {
   const accessToken = localStorage.getItem("access_token");
 
   if (!accessToken) {
+    console.log("No hay token en Auth.");
     alert("No hay token.");
     return;
   }
@@ -84,3 +93,11 @@ function logout() {
   // Evita re-autoselección de Google en el navegador
   google.accounts.id.disableAutoSelect();
 }
+
+//chequeoMati.addEventListener("click", () => {
+//getMe();
+//});
+
+//cerrarSesion.addEventListener("click", () => {
+//logout();
+//});

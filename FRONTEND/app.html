@@ -7,15 +7,36 @@
     <link rel="stylesheet" href="css/app/app.css">
 </head>
 <body>
-    <h1>Estas son las tareas a realizar</h1>
-    <div class="grid" id="grid-tareas"></div>
-    <div class="sec-cargarmas" id="sec-cargarmas"></div>
-    <!-- <div class="overlaysombra" id="overlay-sombra">-->
+    <header>
+        <nav id="navLeft">
+            <h3 id="textoBienvenida"></h3>
+        </nav>
+        
+        <nav id="navCenter">
+                <h3 id="tituloCentral">GESTOR DE TAREAS</h3>
+        </nav>
+        <nav id="navRight">
+            <ul id="ulMenu">
+                <li id="miPerfilHover"><a id="miPerfilBtn">Mi Perfil</a></li>
+                <li id="cerrarSesionHover"><a id="cerrarSesionBtn">Cerrar Sesión</a></li>
+                <li id="fotoPerfilCont">
+                    <img id="fotoPerfil" src="/img/app_bg.jpg" alt="Foto de Perfil">
+                </li>
+            </ul>
+        </nav>
+    </header>
+        <div id="imagenFondo"></div>
+        <!-- <button id="chequeoToken">Chequeo de Token</button> -->
+        <h1>Estas son tus tareas correspondientes</h1>
+        <div class="grid" id="grid-tareas"></div>
+        <div class="sec-cargarmas" id="sec-cargarmas"></div>
+        <!-- <div class="overlaysombra" id="overlay-sombra">-->
         <div class="formstatus" id="form-status">
             <p class="muted" id="status"></p>
             <button class="btn-cerrar-status" id="btn-cerrar-status">Cerrar</button>
         <!--</div>-->
-    </div>
+        </div>
+    
     
     <script type="module" src="./js/app/gestorTareas.js"></script>
 </body>

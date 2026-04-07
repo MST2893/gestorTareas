@@ -4,10 +4,13 @@ import { API_URL } from './api_urls.js';
 //Importo funciones
 import { setStatus } from './F_setStatus.js';
 
+import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
+
 
 export function createProductCard(tarea) {
   const card = document.createElement('article');
   card.className = 'card';
+  card.id = `${tarea.tareaId}`;
 
   const titulo = document.createElement('h3');
   titulo.className = 'titulotarjeta';
@@ -81,7 +84,7 @@ export function createProductCard(tarea) {
   async function cargarCategoriasParaEdicion() {
     if (categoriasCargadas) return;
     try {
-      const res = await fetch('http://32ram.com.ar:5026/api/categorias');
+      const res = await fetch('http://localhost:5026/api/categorias');
       const categorias = await res.json();
       categoriaSelect.innerHTML = '';
       if (!Array.isArray(categorias) || categorias.length === 0) {
@@ -118,6 +121,43 @@ export function createProductCard(tarea) {
   const botonEditar = document.createElement('button');
   botonEditar.textContent = 'Editar';
   botonEditar.className = 'boton-editar';
+
+  const estadoTareaSelect = document.createElement('select');
+  estadoTareaSelect.className = 'estado-tarea-select';
+
+  const opciones = {
+  0: 'Pendiente',
+  1: 'Haciendo',
+  3: 'Completada',
+  4: 'Cancelada'
+  };
+
+  for (const valor in opciones) {
+    const option = document.createElement('option');
+    //const valor = tarea.estado;
+    option.value = valor;
+    option.textContent = opciones[valor];
+    estadoTareaSelect.appendChild(option);
+  }
+  estadoTareaSelect.value = tarea.estado;
+
+  //const tarjetita = document.getElementsByClassName('card');
+
+  aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId));
+
+  if (tarea.estado === 3 || tarea.estado === 4) {
+  card.style.transition = "opacity 0.3s ease";
+  // Cuando el mouse entra
+  card.addEventListener("mouseenter", () => {
+  card.style.opacity = "1"; // opacidad al hacer hover
+  });
+
+  // Cuando el mouse sale
+  card.addEventListener("mouseleave", () => {
+    card.style.opacity = "0.5"; // opacidad normal
+  });
+
+  }
 
   const botonGuardar = document.createElement('button');
   botonGuardar.textContent = 'Guardar';
@@ -195,7 +235,7 @@ function desactivarModoEdicion() {
     }
 
     try {
-      const response = await fetch('http://32ram.com.ar:5026/api/edicion', {
+      const response = await fetch('http://localhost:5026/api/edicion', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosActualizados)
@@ -257,6 +297,7 @@ function desactivarModoEdicion() {
     prioridadSelect,
     botonEliminar,
     botonEditar,
+    estadoTareaSelect,
     botonGuardar,
     botonCancelarEdicion
   );

@@ -127,8 +127,17 @@ namespace APITEST.Migrations
                     b.Property<Guid>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaCompletada")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
@@ -152,7 +161,10 @@ namespace APITEST.Migrations
                         {
                             TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb410"),
                             CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb4ef"),
-                            FechaCreacion = new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Deadline = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Estado = 0,
+                            FechaCompletada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaCreacion = new DateTime(2026, 4, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 1,
                             Titulo = "Pago de servicios publicos"
                         },
@@ -160,7 +172,10 @@ namespace APITEST.Migrations
                         {
                             TareaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb411"),
                             CategoriaId = new Guid("fe2de405-c38e-4c90-ac52-da0540dfb402"),
-                            FechaCreacion = new DateTime(2026, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            Deadline = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Estado = 0,
+                            FechaCompletada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaCreacion = new DateTime(2026, 4, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 0,
                             Titulo = "Terminar de ver pelicula en netflix"
                         });
@@ -201,31 +216,22 @@ namespace APITEST.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GoogleSub")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Permisos")
+                        .HasColumnType("int");
 
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuario", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UsuarioId = new Guid("557c32cb-aefb-4fe9-a402-48e3de0828eb"),
-                            Email = "matias@test.com",
-                            Nombre = "Matías"
-                        },
-                        new
-                        {
-                            UsuarioId = new Guid("01c8921f-5b16-4895-abb4-4436fa7338b5"),
-                            Email = "juan@test.com",
-                            Nombre = "Juan"
-                        });
                 });
 
             modelBuilder.Entity("APITEST.Models.Tarea", b =>
