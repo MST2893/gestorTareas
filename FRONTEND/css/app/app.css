@@ -105,6 +105,11 @@ header {
     width: 100px;
 }
 
+#dashboardHover {
+    height: 100%;
+    width: 120px;
+}
+
 #cerrarSesionHover {
     height: 100%;
     width: 140px;
@@ -118,14 +123,14 @@ header {
     width: 80px;
 }
 
-#miPerfilBtn, #cerrarSesionBtn {
+#miPerfilBtn, #dashboardBtn, #cerrarSesionBtn {
     height: 100%;
     width:  100%;
     background-color: #ffffff;
     transition: background-color 0.20s ease, color 0.20s ease;
 }
 
-#miPerfilBtn:hover, #cerrarSesionBtn:hover {
+#miPerfilBtn:hover, #dashboardBtn:hover, #cerrarSesionBtn:hover {
     background-color: #f4f4f4;
 }
 
