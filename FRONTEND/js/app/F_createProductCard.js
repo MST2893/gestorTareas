@@ -12,9 +12,19 @@ export function createProductCard(tarea) {
   card.className = 'card';
   card.id = `${tarea.tareaId}`;
 
+  //const seccionTitulo = document.createElement('section');
+  //seccionTitulo.id = 'seccion-titulo';
+  //seccionTitulo.innerHTML = `
+  //  <h3 class="titulotarjeta">${tarea.titulo}</h3>
+  //`;
+
   const titulo = document.createElement('h3');
   titulo.className = 'titulotarjeta';
   titulo.textContent = tarea.titulo;
+
+  const textoestadoTarea = document.createElement('p');
+  textoestadoTarea.className = 'textoestadotarea';
+  textoestadoTarea.id = 'textoestadotarea-' + tarea.tareaId; // ID único para cada tarjeta
 
   const categoriaTarea = document.createElement('p');
   categoriaTarea.className = 'categoriatarea';
@@ -300,6 +310,7 @@ function desactivarModoEdicion() {
 
   card.append(
     titulo,
+    textoestadoTarea,
     inputTitulo,
     categoriaTarea,
     tituloDeadline,

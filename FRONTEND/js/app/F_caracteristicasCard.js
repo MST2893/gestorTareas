@@ -5,17 +5,19 @@ let PrimeraVez = 0;
 let opacidadleave = 1;
 
 export async function aplicarEstilosSegunEstado(estado, idcard) {
-
+  const textoestadoTarea = document.getElementById(`textoestadotarea-${idcard}`);
   const tarjetita = document.getElementById(idcard);
 
   if (!tarjetita.dataset.hoverAsignado) {
     tarjetita.addEventListener("mouseenter", () => {
-    tarjetita.style.opacity = 1; // opacidad al hacer hover
+    tarjetita.style.opacity = 1;
+    tarjetita.style.height = "320px"; // opacidad al hacer hover
   });
 
   // Cuando el mouse sale
     tarjetita.addEventListener("mouseleave", () => {
-    tarjetita.style.opacity = tarjetita.dataset.opacidadLeave || 1; // opacidad normal
+    tarjetita.style.opacity = tarjetita.dataset.opacidadLeave || 1;
+    tarjetita.style.height = "135px"; // opacidad normal
   });
 
   tarjetita.dataset.hoverAsignado = "true"; // Marcar que ya se asignó el evento hover  
@@ -30,6 +32,8 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.border = "3px solid rgb(255, 0, 0)";
       tarjetita.dataset.opacidadLeave = 1;
       tarjetita.style.zIndex = "3";
+      textoestadoTarea.textContent = 'Pendiente';
+      textoestadoTarea.style.color = 'red';
       console.log("Rojo");
       break;
     case 1:
@@ -37,6 +41,8 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.border = "3px solid rgb(0, 94, 255)";
       tarjetita.dataset.opacidadLeave = 1;
       tarjetita.style.zIndex = "2";
+      textoestadoTarea.textContent = 'Haciendo';
+      textoestadoTarea.style.color = 'blue';
       console.log("Azul");
       break;
     case 3:
@@ -45,6 +51,8 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.opacity = 0.5;
       tarjetita.dataset.opacidadLeave = 0.5;
       tarjetita.style.zIndex = "1";
+      textoestadoTarea.textContent = 'Completado';
+      textoestadoTarea.style.color = 'green';
       console.log("Verde");
       break;
     case 4:
@@ -52,10 +60,14 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.border = "3px solid rgb(62, 62, 62)";
       tarjetita.dataset.opacidadLeave = 0.5;
       tarjetita.style.opacity = 0.5;
-      tarjetita.style.zIndex = "1";
+      tarjetita.style.zIndex = "1"; 
+      textoestadoTarea.textContent = 'Cancelado';
+      textoestadoTarea.style.color = 'gray';
       console.log("Gris");
       break;
     default:
+      textoestadoTarea.style.color = 'black';
+      textoestadoTarea.textContent = 'Estado desconocido';
       console.log("Estado desconocido");
       break;
   }
