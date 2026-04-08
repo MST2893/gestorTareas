@@ -1,6 +1,8 @@
 // Importo funciones necesarias
 import { createProductCard } from './F_createProductCard.js';
 
+import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
+
 //Asigna un sector del HTML a una variable para su posterior manipulación
 
 const grid = document.querySelector('#grid-tareas');
@@ -17,5 +19,17 @@ export function renderizarTarjetasTareas(tareas) {
     const card = createProductCard(tarea);
     grid.append(card);
     
+    //aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId));
+
+    
+
+    
+
   }
+
+  
+
+
+  
+  
 }

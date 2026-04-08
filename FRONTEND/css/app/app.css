@@ -23,6 +23,7 @@ header {
     justify-content: space-between;
     align-items: center;
     display: flex;
+    z-index: 10;
 }
 
 #textoBienvenida {
@@ -173,6 +174,22 @@ h1 {
     font-size: 50px;
     font-family: 'Roboto Condensed';
     text-align: center;
+}
+
+h2 {
+    font-size: 35px;
+    font-family: 'Roboto Condensed';
+    text-align: center;
+    margin:0;
+    padding:0;
+}
+
+h4 {
+    font-size: 15px;
+    font-family: 'Roboto Condensed';
+    text-align: center;
+    margin:0;
+    padding:0;
 }
 
 .grid {

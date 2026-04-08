@@ -6,12 +6,21 @@ import { getMe } from './chequeoToken.js';
 
 import { logout } from './cerrarSesion.js';
 
+import { setStatus } from './F_setStatus.js';
+
+import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
+
+
+
+import { Countdown } from './CLASS_Countdown.js';
+
 //const chequeoToken = document.getElementById('chequeoToken');
 //chequeoToken.addEventListener("click", () => {
 
 //document.addEventListener("DOMContentLoaded", async () => {
   
-  
+const response = await fetch(API_URL);
+const tareas = await response.json();
 
 
 
@@ -106,7 +115,7 @@ const botonCargarMas = document.createElement('button');
         botonCargarMas.style.display = 'none';
 
         const categoriaSelect = document.getElementById('categoria-select');
-        fetch('http://localhost:5026/api/categorias')
+        fetch('http://32ram.com.ar:5026/api/categorias')
           .then(res => res.json())
           .then(categorias => {
             console.log('Categorías recibidas:', categorias);
@@ -147,7 +156,7 @@ const botonCargarMas = document.createElement('button');
             body.categoriaId = categoriaId;
           }
           console.log('Enviando:', body);
-          fetch(API_URL, {
+          fetch('http://32ram.com.ar:5026/api/tareas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
@@ -177,10 +186,67 @@ const botonCargarMas = document.createElement('button');
       }
     });
 
+    
+
   } else {
     //overlaySombra.style.display = 'block';
     console.log('Tareas no se pudieron cargar');
   }
 
+
+  
+
+  
+
+  let a = 0;
+  const relojito = [];
+
+  for (const tarea of tareas) {
+    const relojDeterminado = document.getElementById(`relojTarea-${tarea.tareaId}`);
+    const deadlineStr = tarea.deadline;
+    
+    
+    if (deadlineStr) {
+        const deadline = new Date(deadlineStr); // ← Importante: usar NEW Date()
+        
+        relojito[a] = new Countdown(relojDeterminado, deadline);
+
+        // ---------------------------------------
+        // ÚNICO intervalo para actualizarlos a todos
+        // ---------------------------------------
+        setInterval(() => {
+            relojito.forEach(r => r.update());
+        }, 1000);
+
+
+    }
+
+    a++;
+
+  }
+
+// Hace una pasada por cada tarea para pintarla de su color correspondiente.
+
+for (const tarea of tareas) {
+
+    aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId));
+
+  }
+
+const SeleccionSelectoresEstadoTareas = document.querySelectorAll('[id^="estado-tarea-select-"]');
+
+SeleccionSelectoresEstadoTareas.forEach(select => {
+  select.addEventListener('change', () => {
+    const idTarea = select.id.replace('estado-tarea-select-', '');
+    const valor = parseInt(select.value);
+
+    aplicarEstilosSegunEstado(valor, idTarea);
+    console.log("CAMBIO!", idTarea);
+  });
+});
+
+
+
+  
 
 //});

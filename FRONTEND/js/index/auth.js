@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5026"; // cambie el puerto
+const API_BASE_URL = "http://32ram.com.ar:5026"; // cambie el puerto
 const GOOGLE_CLIENT_ID = "171373192496-4md3aek436pl7541fku9h5icsmpfse7e.apps.googleusercontent.com";
 
 const resultEl = document.getElementById("result");

@@ -20,6 +20,23 @@ export function createProductCard(tarea) {
   categoriaTarea.className = 'categoriatarea';
   categoriaTarea.textContent = `Categoría: ${tarea.categoria.nombre || 'Sin categoría'}`;
 
+  const tituloDeadline = document.createElement('h4');
+  tituloDeadline.className = 'titulodeadline';
+  const fechaDeadlineTarea= new Date(tarea.deadline);
+  const fechaFormateada = fechaDeadlineTarea.toLocaleDateString("es-AR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).toUpperCase().replace(",", "");
+
+  tituloDeadline.textContent = 'DEADLINE: '+ fechaFormateada;
+
+  const relojTarea = document.createElement('h2');
+  relojTarea.className = 'relojTarea';
+  relojTarea.id = `relojTarea-${tarea.tareaId}`; // Clase única para cada tarea
+  relojTarea.textContent = "00d:00h:00m:00s";
+
   const descripcionTarea = document.createElement('p');
   descripcionTarea.className = 'descripciontarea';
   descripcionTarea.textContent = `Descripción: ${tarea.descripcion || 'Sin descripción'}`;
@@ -84,7 +101,7 @@ export function createProductCard(tarea) {
   async function cargarCategoriasParaEdicion() {
     if (categoriasCargadas) return;
     try {
-      const res = await fetch('http://localhost:5026/api/categorias');
+      const res = await fetch('http://32ram.com.ar:5026/api/categorias');
       const categorias = await res.json();
       categoriaSelect.innerHTML = '';
       if (!Array.isArray(categorias) || categorias.length === 0) {
@@ -114,6 +131,7 @@ export function createProductCard(tarea) {
     }
   }
 
+  
   const botonEliminar = document.createElement('button');
   botonEliminar.textContent = 'Eliminar';
   botonEliminar.className = 'boton-eliminar'
@@ -121,9 +139,11 @@ export function createProductCard(tarea) {
   const botonEditar = document.createElement('button');
   botonEditar.textContent = 'Editar';
   botonEditar.className = 'boton-editar';
+  
 
   const estadoTareaSelect = document.createElement('select');
   estadoTareaSelect.className = 'estado-tarea-select';
+  estadoTareaSelect.id = `estado-tarea-select-${tarea.tareaId}`;
 
   const opciones = {
   0: 'Pendiente',
@@ -143,7 +163,7 @@ export function createProductCard(tarea) {
 
   //const tarjetita = document.getElementsByClassName('card');
 
-  aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId));
+  
 
   if (tarea.estado === 3 || tarea.estado === 4) {
   card.style.transition = "opacity 0.3s ease";
@@ -235,7 +255,7 @@ function desactivarModoEdicion() {
     }
 
     try {
-      const response = await fetch('http://localhost:5026/api/edicion', {
+      const response = await fetch('http://32ram.com.ar:5026/api/edicion', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosActualizados)
@@ -289,18 +309,28 @@ function desactivarModoEdicion() {
     titulo,
     inputTitulo,
     categoriaTarea,
+    tituloDeadline,
+    relojTarea,
     hacedorTarea,
     categoriaSelect,
     descripcionTarea,
     inputDescripcion,
     prioridadTarea,
     prioridadSelect,
-    botonEliminar,
-    botonEditar,
     estadoTareaSelect,
     botonGuardar,
     botonCancelarEdicion
   );
+  if (tarea.tareaUsuariosR[0].usuario.Permisos == 1){
+    card.append(
+  
+    botonEliminar,
+    botonEditar
+
+  );
+  }
+
+  
 
   return card;
 }

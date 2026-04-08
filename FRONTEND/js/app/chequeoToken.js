@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5026";
+const API_BASE_URL = "http://32ram.com.ar:5026";
 
 export async function getMe() {
   const accessToken = localStorage.getItem("access_token");
