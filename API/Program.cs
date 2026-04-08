@@ -173,6 +173,23 @@ app.MapPut("/api/edicion", async ([FromServices] TareasContext dbContext, [FromB
     return Results.NotFound();   
 });
 
+app.MapPut("/api/edicionestado", async ([FromServices] TareasContext dbContext, [FromBody] Tarea tarea)=>
+{
+    var tareaActual = dbContext.Tareas.Find(tarea.TareaId);
+
+    if(tareaActual!=null)
+    {
+        tareaActual.Estado = tarea.Estado;
+
+        await dbContext.SaveChangesAsync();
+
+        return Results.Ok();
+
+    }
+
+    return Results.NotFound();   
+});
+
 app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext) =>
 {
     var tareas = await dbContext.Tareas

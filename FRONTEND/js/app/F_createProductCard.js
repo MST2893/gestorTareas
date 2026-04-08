@@ -165,19 +165,12 @@ export function createProductCard(tarea) {
 
   
 
-  if (tarea.estado === 3 || tarea.estado === 4) {
-  card.style.transition = "opacity 0.3s ease";
+  //if (tarea.estado === 3 || tarea.estado === 4) {
+  
   // Cuando el mouse entra
-  card.addEventListener("mouseenter", () => {
-  card.style.opacity = "1"; // opacidad al hacer hover
-  });
+ 
 
-  // Cuando el mouse sale
-  card.addEventListener("mouseleave", () => {
-    card.style.opacity = "0.5"; // opacidad normal
-  });
-
-  }
+  //}
 
   const botonGuardar = document.createElement('button');
   botonGuardar.textContent = 'Guardar';

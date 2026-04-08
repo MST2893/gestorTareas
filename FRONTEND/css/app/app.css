@@ -208,7 +208,7 @@ h4 {
         background: #ffffff;
         overflow: hidden;
         box-shadow: 0px 0px 50px rgb(43, 156, 255);
-        transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, border-width 0.25s ease;
+        transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, border-width 0.25s ease, opacity 0.3s ease;
       }
 
 .card:hover {
