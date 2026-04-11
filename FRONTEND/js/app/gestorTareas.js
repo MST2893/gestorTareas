@@ -1,14 +1,17 @@
 import { cargarTarjetasTareas } from './F_cargarTarjetasTareas.js';
 
-import { API_URL } from './api_urls.js';
+import { API_URL, API_URL_CATEGORIAS, API_URL_TAREAS, API_URL_USUARIO } from '../general/api_urls.js';
 
 import { getMe } from './chequeoToken.js';
 
-import { logout } from './cerrarSesion.js';
+import { logout } from '../general/F_cerrarSesion.js';
 
 import { setStatus } from './F_setStatus.js';
 
 import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
+
+import { crearFondo } from '../general/F_crearFondo.js';
+import { crearBanner } from '../general/F_crearBanner.js';
 
 
 
@@ -18,32 +21,26 @@ import { Countdown } from './CLASS_Countdown.js';
 //chequeoToken.addEventListener("click", () => {
 
 //document.addEventListener("DOMContentLoaded", async () => {
-  
+
+const responseUsuario = await fetch(API_URL_USUARIO);
+const DatosUsuario = await responseUsuario.json();
+
+//crearFondo();
+
+const htmlActual = window.location.pathname.split("/").pop();
+crearBanner(DatosUsuario, htmlActual);
+
+
+
+
 const response = await fetch(API_URL);
 const tareas = await response.json();
 
 
 
-const datosUsuario = await getMe();
+//const datosUsuario = await getMe();
 
-const fotoDePerfil = document.getElementById("fotoPerfil");
-fotoDePerfil.src = datosUsuario?.pictureUrl || '/img/app_bg.jpg';
-fotoDePerfil.alt = 'Foto de perfil';
 
-const textoDeBienvenida = document.getElementById("textoBienvenida");
-textoDeBienvenida.textContent = `¡Bienvenido, ${datosUsuario?.name || datosUsuario?.email}!`;
-
-const cerrarSesionBoton = document.getElementById("cerrarSesionBtn");
-
-console.log("Botón encontrado:", cerrarSesionBoton);
-console.log("Pepito");
-
-cerrarSesionBoton.addEventListener("click", () => {
-  logout();
-  window.location.href = "index.html";
-
-  console.log("Sesión cerrada, redirigiendo a index.html");
-});
 
 //});
 
@@ -115,7 +112,7 @@ const botonCargarMas = document.createElement('button');
         botonCargarMas.style.display = 'none';
 
         const categoriaSelect = document.getElementById('categoria-select');
-        fetch('http://32ram.com.ar:5026/api/categorias')
+        fetch(`${API_URL_CATEGORIAS}`) // Cambia esta URL por la correcta para obtener categorías
           .then(res => res.json())
           .then(categorias => {
             console.log('Categorías recibidas:', categorias);
@@ -156,7 +153,7 @@ const botonCargarMas = document.createElement('button');
             body.categoriaId = categoriaId;
           }
           console.log('Enviando:', body);
-          fetch('http://32ram.com.ar:5026/api/tareas', {
+          fetch(`${API_URL_TAREAS}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)

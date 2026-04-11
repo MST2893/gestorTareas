@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://32ram.com.ar:5026";
+import { API_URL_BASE } from '../general/api_urls.js';
 
 export async function getMe() {
   const accessToken = localStorage.getItem("access_token");
@@ -8,7 +8,7 @@ export async function getMe() {
     return;
   }
 
-  const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
+  const response = await fetch(`${API_URL_BASE}/api/auth/me`, {
     method: "GET",
     headers: {
       "Authorization": `Bearer ${accessToken}`

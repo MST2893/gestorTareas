@@ -15,6 +15,8 @@ public class Usuario
     public string? Email {get;set;}
     public int Permisos {get;set;}
 
+    public string? FotoPerfil {get;set;}
+
     [JsonIgnore]
     public virtual ICollection<TareaUsuariosRel> TareaUsuariosR {get;set;}
 }

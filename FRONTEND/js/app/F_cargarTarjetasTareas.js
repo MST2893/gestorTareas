@@ -1,5 +1,5 @@
 //Importo variables
-import { API_URL } from './api_urls.js';
+import { API_URL } from '../general/api_urls.js';
 
 //Importo funciones
 import { setStatus } from './F_setStatus.js';

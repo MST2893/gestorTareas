@@ -83,6 +83,8 @@ public class TareasContext: DbContext
             usuario.Property(p=> p.Email).IsRequired();
 
             usuario.Property(p=> p.Permisos).IsRequired();
+
+            usuario.Property(p=> p.FotoPerfil).IsRequired();
         });
 
 

@@ -164,7 +164,7 @@ namespace APITEST.Migrations
                             Deadline = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Estado = 0,
                             FechaCompletada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaCreacion = new DateTime(2026, 4, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaCreacion = new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 1,
                             Titulo = "Pago de servicios publicos"
                         },
@@ -175,7 +175,7 @@ namespace APITEST.Migrations
                             Deadline = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Estado = 0,
                             FechaCompletada = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaCreacion = new DateTime(2026, 4, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaCreacion = new DateTime(2026, 4, 9, 0, 0, 0, 0, DateTimeKind.Local),
                             PrioridadTarea = 0,
                             Titulo = "Terminar de ver pelicula en netflix"
                         });
@@ -215,6 +215,10 @@ namespace APITEST.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FotoPerfil")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

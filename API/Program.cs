@@ -83,7 +83,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", cors =>
         cors
             //.AllowAnyOrigin()
-            .WithOrigins("http://32ram.com.ar:5501")
+            .WithOrigins("http://127.0.0.1:5501")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
@@ -212,6 +212,15 @@ app.MapGet("/api/tareasyusuario/{mailGoogle}", async ([FromServices] TareasConte
         .ToListAsync();
 
     return Results.Ok(tareas);
+});
+
+app.MapGet("/api/usuario/{mailGoogle}", async ([FromServices] TareasContext dbContext, [FromRoute] string mailGoogle) =>
+{
+    var usuario = await dbContext.Usuarios
+        .Where(t => t.Email == mailGoogle)
+        .FirstOrDefaultAsync();
+
+    return Results.Ok(usuario);
 });
 
 app.Run();

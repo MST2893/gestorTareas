@@ -1,5 +1,5 @@
 import { setStatus } from './F_setStatus.js';
-
+import { API_URL_EDICIONESTADO } from '../general/api_urls.js';
 
 let PrimeraVez = 0;
 let opacidadleave = 1;
@@ -78,7 +78,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
     };
 
   try {
-        const response = await fetch('http://32ram.com.ar:5026/api/edicionestado', {
+        const response = await fetch(`${API_URL_EDICIONESTADO}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(datosActualizados)

@@ -1,5 +1,5 @@
 //Importo variables
-import { API_URL } from './api_urls.js';
+import { API_URL, API_URL_CATEGORIAS, API_URL_EDICION } from '../general/api_urls.js';
 
 //Importo funciones
 import { setStatus } from './F_setStatus.js';
@@ -111,7 +111,7 @@ export function createProductCard(tarea) {
   async function cargarCategoriasParaEdicion() {
     if (categoriasCargadas) return;
     try {
-      const res = await fetch('http://32ram.com.ar:5026/api/categorias');
+      const res = await fetch(`${API_URL_CATEGORIAS}`);
       const categorias = await res.json();
       categoriaSelect.innerHTML = '';
       if (!Array.isArray(categorias) || categorias.length === 0) {
@@ -258,7 +258,7 @@ function desactivarModoEdicion() {
     }
 
     try {
-      const response = await fetch('http://32ram.com.ar:5026/api/edicion', {
+      const response = await fetch(`${API_URL_EDICION}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosActualizados)
