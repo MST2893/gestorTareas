@@ -10,14 +10,12 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
 
   if (!tarjetita.dataset.hoverAsignado) {
     tarjetita.addEventListener("mouseenter", () => {
-    tarjetita.style.opacity = 1;
-    tarjetita.style.height = "320px"; // opacidad al hacer hover
+    tarjetita.style.opacity = 1; // opacidad al hacer hover
   });
 
   // Cuando el mouse sale
     tarjetita.addEventListener("mouseleave", () => {
-    tarjetita.style.opacity = tarjetita.dataset.opacidadLeave || 1;
-    tarjetita.style.height = "135px"; // opacidad normal
+    tarjetita.style.opacity = tarjetita.dataset.opacidadLeave || 1; // opacidad normal
   });
 
   tarjetita.dataset.hoverAsignado = "true"; // Marcar que ya se asignó el evento hover  

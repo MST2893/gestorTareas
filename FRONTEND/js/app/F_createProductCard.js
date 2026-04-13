@@ -12,6 +12,11 @@ export function createProductCard(tarea) {
   card.className = 'card';
   card.id = `${tarea.tareaId}`;
 
+  const anchoBaseCard = 650;
+  const altoBaseCard = 130;
+  card.style.width = window.innerWidth < 700 ? `${Math.trunc(anchoBaseCard*(window.innerWidth/700))}px` : `${anchoBaseCard}px`;
+  card.style.height = window.innerWidth < 700 ? `${Math.trunc(altoBaseCard*(window.innerWidth/700))}px` : `${altoBaseCard}px`;
+
   //const seccionTitulo = document.createElement('section');
   //seccionTitulo.id = 'seccion-titulo';
   //seccionTitulo.innerHTML = `
@@ -20,18 +25,28 @@ export function createProductCard(tarea) {
 
   const titulo = document.createElement('h3');
   titulo.className = 'titulotarjeta';
+  const fontSizeBasetitulo = 25;
+  titulo.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasetitulo*(window.innerWidth/700))}px` : `${fontSizeBasetitulo}px`;
   titulo.textContent = tarea.titulo;
+
+  
 
   const textoestadoTarea = document.createElement('p');
   textoestadoTarea.className = 'textoestadotarea';
+  const fontSizeBasetextoestadotarea = 14;
+  textoestadoTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasetextoestadotarea*(window.innerWidth/700))}px` : `${fontSizeBasetextoestadotarea}px`;
   textoestadoTarea.id = 'textoestadotarea-' + tarea.tareaId; // ID único para cada tarjeta
 
   const categoriaTarea = document.createElement('p');
   categoriaTarea.className = 'categoriatarea';
+  const fontSizeBasecategoriaTarea = 20;
+  categoriaTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasecategoriaTarea*(window.innerWidth/700))}px` : `${fontSizeBasecategoriaTarea}px`;
   categoriaTarea.textContent = `Categoría: ${tarea.categoria.nombre || 'Sin categoría'}`;
 
   const tituloDeadline = document.createElement('h4');
   tituloDeadline.className = 'titulodeadline';
+  const fontSizeBasetitulodeadline = 15;
+  tituloDeadline.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasetitulodeadline*(window.innerWidth/700))}px` : `${fontSizeBasetitulodeadline}px`;
   const fechaDeadlineTarea= new Date(tarea.deadline);
   const fechaFormateada = fechaDeadlineTarea.toLocaleDateString("es-AR", {
     weekday: "long",
@@ -44,15 +59,21 @@ export function createProductCard(tarea) {
 
   const relojTarea = document.createElement('h2');
   relojTarea.className = 'relojTarea';
+  const fontSizeBaserelojTarea = 35;
+  relojTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBaserelojTarea*(window.innerWidth/700))}px` : `${fontSizeBaserelojTarea}px`;
   relojTarea.id = `relojTarea-${tarea.tareaId}`; // Clase única para cada tarea
   relojTarea.textContent = "00d:00h:00m:00s";
 
   const descripcionTarea = document.createElement('p');
   descripcionTarea.className = 'descripciontarea';
+  const fontSizeBasedescripcionTarea = 14;
+  descripcionTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasedescripcionTarea*(window.innerWidth/700))}px` : `${fontSizeBasedescripcionTarea}px`;
   descripcionTarea.textContent = `Descripción: ${tarea.descripcion || 'Sin descripción'}`;
 
   const hacedorTarea = document.createElement('p');
   hacedorTarea.className = 'hacedortarea';
+  const fontSizeBasehacedortarea = 14;
+  hacedorTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasehacedortarea*(window.innerWidth/700))}px` : `${fontSizeBasehacedortarea}px`;
 
   const cantidadHacedores = tarea.tareaUsuariosR.length;
 
@@ -73,6 +94,8 @@ export function createProductCard(tarea) {
 
   const prioridadTarea = document.createElement('p');
   prioridadTarea.className = 'prioridadtarea';
+  const fontSizeBaseprioridadTarea = 14;
+  prioridadTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBaseprioridadTarea*(window.innerWidth/700))}px` : `${fontSizeBaseprioridadTarea}px`;
   const prioridadTexto = {
     0: 'Baja',
     1: 'Media',
@@ -153,6 +176,11 @@ export function createProductCard(tarea) {
 
   const estadoTareaSelect = document.createElement('select');
   estadoTareaSelect.className = 'estado-tarea-select';
+  const fontSizeBaseestadoTareaSelect = 14;
+  estadoTareaSelect.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBaseestadoTareaSelect*(window.innerWidth/700))}px` : `${fontSizeBaseestadoTareaSelect}px`;
+  const paddingtopbottomETS = 6;
+  const paddingleftrightETS = 12;
+  estadoTareaSelect.style.padding = window.innerWidth < 700 ? `${Math.trunc(paddingtopbottomETS*(window.innerWidth/700))}px ${Math.trunc(paddingleftrightETS*(window.innerWidth/700))}px` : `${paddingtopbottomETS}px ${paddingleftrightETS}px`;
   estadoTareaSelect.id = `estado-tarea-select-${tarea.tareaId}`;
 
   const opciones = {
@@ -192,8 +220,23 @@ export function createProductCard(tarea) {
   botonCancelarEdicion.className = 'boton-cancelar-edicion';
   botonCancelarEdicion.style.display = 'none';
 
-  //ACA ESTABA LA FUNCION activarModoEdicion
-  
+  //DETECCION RESIZEO DE VENTANA
+  window.addEventListener("resize", () => {
+      card.style.width = window.innerWidth < 700 ? `${Math.trunc(anchoBaseCard*(window.innerWidth/700))}px` : `${anchoBaseCard}px`;
+      card.style.height = window.innerWidth < 700 ? `${Math.trunc(altoBaseCard*(window.innerWidth/700))}px` : `${altoBaseCard}px`;
+      
+      titulo.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasetitulo*(window.innerWidth/700))}px` : `${fontSizeBasetitulo}px`;
+      textoestadoTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasetextoestadotarea*(window.innerWidth/700))}px` : `${fontSizeBasetextoestadotarea}px`;
+      categoriaTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasecategoriaTarea*(window.innerWidth/700))}px` : `${fontSizeBasecategoriaTarea}px`;
+      tituloDeadline.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasetitulodeadline*(window.innerWidth/700))}px` : `${fontSizeBasetitulodeadline}px`;
+      relojTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBaserelojTarea*(window.innerWidth/700))}px` : `${fontSizeBaserelojTarea}px`;
+      descripcionTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasedescripcionTarea*(window.innerWidth/700))}px` : `${fontSizeBasedescripcionTarea}px`;
+      hacedorTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBasehacedortarea*(window.innerWidth/700))}px` : `${fontSizeBasehacedortarea}px`;
+      prioridadTarea.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBaseprioridadTarea*(window.innerWidth/700))}px` : `${fontSizeBaseprioridadTarea}px`;
+      estadoTareaSelect.style.fontSize = window.innerWidth < 700 ? `${Math.trunc(fontSizeBaseestadoTareaSelect*(window.innerWidth/700))}px` : `${fontSizeBaseestadoTareaSelect}px`;
+      estadoTareaSelect.style.padding = window.innerWidth < 700 ? `${Math.trunc(paddingtopbottomETS*(window.innerWidth/700))}px ${Math.trunc(paddingleftrightETS*(window.innerWidth/700))}px` : `${paddingtopbottomETS}px ${paddingleftrightETS}px`;
+
+  });
 
   //ACA ESTABA LA FUNCION desactivarModoEdicion
   function activarModoEdicion() {

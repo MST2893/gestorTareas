@@ -16,14 +16,14 @@ export function crearBanner(DatosUsuario, idPagina)   {
     Header.style.alignItems = 'center';
     Header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
     Header.style.zIndex = '10';
-
+    document.body.appendChild(Header);
 
     const NavLeft = document.createElement('nav');
     NavLeft.className = 'nav-left';
     NavLeft.style.display = 'flex';
     NavLeft.style.alignItems = 'center';
     NavLeft.style.paddingLeft = '20px';
-    NavLeft.style.width = '30%';
+    NavLeft.style.width = '40%';
     Header.appendChild(NavLeft);
 
     const NavCenter = document.createElement('nav');
@@ -31,7 +31,7 @@ export function crearBanner(DatosUsuario, idPagina)   {
     NavCenter.style.display = 'flex';
     NavCenter.style.justifyContent = 'center';
     NavCenter.style.alignItems = 'center';
-    NavCenter.style.width = '30%';
+    NavCenter.style.width = '20%';
     Header.appendChild(NavCenter);
 
     const NavRight = document.createElement('nav');
@@ -40,7 +40,7 @@ export function crearBanner(DatosUsuario, idPagina)   {
     NavRight.style.alignItems = 'center';
     NavRight.style.justifyContent = 'flex-end';
     NavRight.style.paddingRight = '0px';
-    NavRight.style.width = '30%';
+    NavRight.style.width = '40%';
     NavRight.style.height = '100%';
     Header.appendChild(NavRight);
     
@@ -66,7 +66,11 @@ export function crearBanner(DatosUsuario, idPagina)   {
     ListaDesordenada.style.margin = '0';
     ListaDesordenada.style.padding = '0';
     ListaDesordenada.style.height = '100%';
+    ListaDesordenada.style.zIndex = '11';
     NavRight.appendChild(ListaDesordenada);
+
+   
+
 
     let datos = [];
 
@@ -144,6 +148,28 @@ export function crearBanner(DatosUsuario, idPagina)   {
   });
     ListaDesordenada.appendChild(ItemLista);
 }
+    let Mobile = 0;
+
+    modoMenu();
+
+    const ItemListaFoto = document.createElement('div')
+    
+    ItemListaFoto.style.height = '100%';
+    ItemListaFoto.style.display = 'flex';
+    ItemListaFoto.style.alignItems = 'center';
+    ItemListaFoto.style.transition = 'background-color 0.20s ease';
+    ItemListaFoto.addEventListener("mouseenter", () => {
+    if (Mobile == 1) {
+    ItemListaFoto.style.backgroundColor = '#f4f4f4';
+    ItemListaFoto.style.cursor = 'pointer';
+    } else {
+        ItemListaFoto.style.cursor = 'default';
+    }
+    });
+    ItemListaFoto.addEventListener("mouseleave", () => {
+    ItemListaFoto.style.backgroundColor = 'transparent';
+  });
+
     const FotoPerfil = document.createElement('img');
     FotoPerfil.src = DatosUsuario.fotoPerfil || '/img/app_bg.jpg';
     FotoPerfil.style.width = '40px';
@@ -151,9 +177,66 @@ export function crearBanner(DatosUsuario, idPagina)   {
     FotoPerfil.style.borderRadius = '50%';
     FotoPerfil.style.paddingRight = '20px';
     FotoPerfil.style.paddingLeft = '20px';
-    NavRight.appendChild(FotoPerfil);
+    
+    ItemListaFoto.appendChild(FotoPerfil);
 
-    console.log(DatosUsuario.fotoPerfil);
+    NavRight.appendChild(ItemListaFoto);
 
-    document.body.appendChild(Header);
+    estiloSegunMobile();
+
+    window.addEventListener("resize", () => {
+        modoMenu();
+        estiloSegunMobile();
+    });
+
+    ItemListaFoto.addEventListener("click", () => {
+        if (Mobile == 1) {
+            if (ListaDesordenada.style.display === 'none') {
+                ListaDesordenada.style.display = 'flex';
+            } else {
+                ListaDesordenada.style.display = 'none';
+            }
+        }
+    });
+
+    function modoMenu() {
+        if ((314) > (NavRight.offsetWidth)) {
+            Mobile = 1;
+        } else {
+            Mobile = 0;
+        }
+    }
+
+    function estiloSegunMobile() {
+        if (Mobile == 1) {
+            ListaDesordenada.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+            ListaDesordenada.style.border = '2px solid #565656';
+            ListaDesordenada.style.listStyle = 'none';
+            ListaDesordenada.style.display = 'none';
+            ListaDesordenada.style.flexDirection = 'column';
+            ListaDesordenada.style.margin = '0';
+            ListaDesordenada.style.padding = '0';
+            ListaDesordenada.style.height = '120px';
+            ListaDesordenada.style.position = 'absolute';
+            ListaDesordenada.style.top = '60px';
+            ListaDesordenada.style.right = '0';
+            ListaDesordenada.style.transform = 'translate(0%, 0%)';
+            document.body.appendChild(ListaDesordenada);
+        } else {
+            ListaDesordenada.style.flexDirection = 'row';
+            ListaDesordenada.style.backgroundColor = 'transparent';
+            ListaDesordenada.style.border = 'none';
+            ListaDesordenada.style.height = '100%';
+            ListaDesordenada.style.top = '0';
+            ListaDesordenada.style.right = `${FotoPerfil.offsetWidth}px`;
+            ListaDesordenada.style.transform = 'translate(0, 0)';
+            ListaDesordenada.style.display = 'flex';
+            
+
+            NavRight.appendChild(ListaDesordenada);
+            NavRight.appendChild(ItemListaFoto);
+        }
+    }
 }
+
+ 

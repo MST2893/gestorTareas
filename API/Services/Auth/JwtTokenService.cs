@@ -31,7 +31,7 @@ public sealed class JwtTokenService : IJwtTokenService
 
         var accessTokenMinutes = int.TryParse(_configuration["Jwt:AccessTokenMinutes"], out var minutes)
             ? minutes
-            : 120;
+            : 240;
 
         var now = DateTime.UtcNow;
         var expiresAtUtc = now.AddMinutes(accessTokenMinutes);

@@ -16,7 +16,7 @@ body {
     padding-bottom: 10px;
     flex-direction: column;
     align-items: center;
-    /*justify-content: center;*/
+    justify-content: center;
     
     text-align: center;
     background-color: #ffffff;
@@ -78,6 +78,7 @@ h4 {
     width: 650px;
     margin: 0 auto;
     text-align: center;
+    align-items: center;
 }
 
 .card {
