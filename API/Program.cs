@@ -16,6 +16,20 @@ builder.Services.AddControllers();
 var frontendOrigin = builder.Configuration["Frontend:Origin"]
     ?? throw new InvalidOperationException("Falta Frontend:Origin.");
 
+var allowedFrontendOrigins = new[]
+{
+    frontendOrigin,
+    "https://32ram.com.ar:5500",
+    "http://localhost:5500",
+    "http://localhost:5501",
+    "https://localhost:5500",
+    "https://localhost:5501",
+    "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501",
+    "https://127.0.0.1:5500",
+    "https://127.0.0.1:5501"
+}.Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
+
 //builder.Services.AddCors(options =>
 //{
 //    options.AddPolicy("Frontend", policy =>
@@ -36,6 +50,8 @@ var jwtKey = builder.Configuration["Jwt:Key"]
 if (jwtKey.Length < 32)
     throw new InvalidOperationException("Jwt:Key debe tener al menos 32 caracteres.");
 
+var authCookieName = builder.Configuration["Jwt:CookieName"] ?? "gestorTareas_access_token";
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -53,6 +69,19 @@ builder.Services
 
             ValidateLifetime = true,
             ClockSkew = TimeSpan.FromMinutes(1)
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (context.Request.Cookies.TryGetValue(authCookieName, out var token))
+                {
+                    context.Token = token;
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -83,7 +112,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", cors =>
         cors
             //.AllowAnyOrigin()
-            .WithOrigins("http://127.0.0.1:5501")
+            .WithOrigins(allowedFrontendOrigins)
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
@@ -118,12 +147,12 @@ app.MapGet("/CargarDatabase", async ([FromServices] TareasContext dbContext) =>
 app.MapGet("/api/tareas", async ([FromServices] TareasContext dbContext)=>
 {
     return Results.Ok(dbContext.Tareas.Include(p=> p.Categoria).ToList());
-});
+}).RequireAuthorization();
 
 app.MapGet("/api/categorias", async ([FromServices] TareasContext dbContext) =>
 {
     return Results.Ok(dbContext.Categorias.ToList());
-});
+}).RequireAuthorization();
 
 app.MapDelete("/api/tareas/{id}", async ([FromServices] TareasContext dbContext, [FromRoute] Guid id) =>
 {
@@ -140,7 +169,7 @@ app.MapDelete("/api/tareas/{id}", async ([FromServices] TareasContext dbContext,
      }
 
      return Results.NotFound();
-});
+}).RequireAuthorization();
 
 app.MapPost("/api/tareas", async ([FromServices] TareasContext dbContext, [FromBody] Tarea tarea)=>
 {
@@ -150,8 +179,8 @@ app.MapPost("/api/tareas", async ([FromServices] TareasContext dbContext, [FromB
 
     await dbContext.SaveChangesAsync();
 
-    return Results.Ok();   
-});
+    return Results.Ok();
+}).RequireAuthorization();
 
 app.MapPut("/api/edicion", async ([FromServices] TareasContext dbContext, [FromBody] Tarea tarea)=>
 {
@@ -170,8 +199,8 @@ app.MapPut("/api/edicion", async ([FromServices] TareasContext dbContext, [FromB
 
     }
 
-    return Results.NotFound();   
-});
+    return Results.NotFound();
+}).RequireAuthorization();
 
 app.MapPut("/api/edicionestado", async ([FromServices] TareasContext dbContext, [FromBody] Tarea tarea)=>
 {
@@ -187,8 +216,8 @@ app.MapPut("/api/edicionestado", async ([FromServices] TareasContext dbContext, 
 
     }
 
-    return Results.NotFound();   
-});
+    return Results.NotFound();
+}).RequireAuthorization();
 
 app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext) =>
 {
@@ -199,20 +228,20 @@ app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext)
         .ToListAsync();
 
     return Results.Ok(tareas);
-});
+}).RequireAuthorization();
 
 app.MapGet("/api/tareasyusuario/{mailGoogle}", async ([FromServices] TareasContext dbContext, [FromRoute] string mailGoogle) =>
 {
     var tareas = await dbContext.Tareas
         .Where(t => t.TareaUsuariosR
-            .Any(rel => rel.Usuario.Email == mailGoogle))
+            .Any(rel => rel.Usuario != null && rel.Usuario.Email == mailGoogle))
         .Include(t => t.Categoria)
         .Include(t => t.TareaUsuariosR)                // <- tabla intermedia
             .ThenInclude(rel => rel.Usuario)          // <- usuario asignado
         .ToListAsync();
 
     return Results.Ok(tareas);
-});
+}).RequireAuthorization();
 
 app.MapGet("/api/usuario/{mailGoogle}", async ([FromServices] TareasContext dbContext, [FromRoute] string mailGoogle) =>
 {
@@ -221,6 +250,11 @@ app.MapGet("/api/usuario/{mailGoogle}", async ([FromServices] TareasContext dbCo
         .FirstOrDefaultAsync();
 
     return Results.Ok(usuario);
-});
+}).RequireAuthorization();
+
+app.MapGet("/api/authCheck", () =>
+{
+    return Results.Ok(true);
+}).RequireAuthorization();
 
 app.Run();

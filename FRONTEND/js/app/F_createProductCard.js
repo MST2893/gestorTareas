@@ -1,5 +1,5 @@
 //Importo variables
-import { API_URL, API_URL_CATEGORIAS, API_URL_EDICION } from '../general/api_urls.js';
+import { API_URL_CATEGORIAS, API_URL_EDICION, API_URL_TAREAS } from '../general/api_urls.js';
 
 //Importo funciones
 import { setStatus } from './F_setStatus.js';
@@ -134,7 +134,9 @@ export function createProductCard(tarea) {
   async function cargarCategoriasParaEdicion() {
     if (categoriasCargadas) return;
     try {
-      const res = await fetch(`${API_URL_CATEGORIAS}`);
+      const res = await fetch(`${API_URL_CATEGORIAS}`, {
+        credentials: "include"
+      });
       const categorias = await res.json();
       categoriaSelect.innerHTML = '';
       if (!Array.isArray(categorias) || categorias.length === 0) {
@@ -186,8 +188,9 @@ export function createProductCard(tarea) {
   const opciones = {
   0: 'Pendiente',
   1: 'Haciendo',
-  3: 'Completada',
-  4: 'Cancelada'
+  2: 'Completada',
+  3: 'Cancelada',
+  4: 'Caducada'
   };
 
   for (const valor in opciones) {
@@ -303,6 +306,7 @@ function desactivarModoEdicion() {
     try {
       const response = await fetch(`${API_URL_EDICION}`, {
         method: 'PUT',
+        credentials: "include",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosActualizados)
       });
@@ -337,8 +341,9 @@ function desactivarModoEdicion() {
 
   botonEliminar.addEventListener('click', async () => {
     try {
-      const response = await fetch(`${API_URL}${tarea.tareaId}`, {
-        method: 'DELETE'
+      const response = await fetch(`${API_URL_TAREAS}/${tarea.tareaId}`, {
+        method: 'DELETE',
+        credentials: "include"
       });
       if (response.ok) {
         card.remove();

@@ -13,7 +13,7 @@ export class Countdown {
 
         if (diff <= 0) {
             this.element.textContent = "00d:00h:00m:00s";
-            console.log("¡Deadline alcanzado!");
+            //console.log("¡Deadline alcanzado!");
             return;
         }
 

@@ -2,7 +2,13 @@ import { crearFondo } from '../general/F_crearFondo.js';
 import { crearBanner } from '../general/F_crearBanner.js';
 import { API_URL_USUARIO } from '../general/api_urls.js';
 
-const responseUsuario = await fetch(API_URL_USUARIO);
+import { authCheck } from '../general/F_authCheck.js';
+
+authCheck();
+
+const responseUsuario = await fetch(API_URL_USUARIO, {
+  credentials: "include"
+});
 const DatosUsuario = await responseUsuario.json();
 
 crearFondo();

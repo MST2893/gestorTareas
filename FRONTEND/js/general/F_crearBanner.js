@@ -1,6 +1,11 @@
 import { logout } from './F_cerrarSesion.js';
 
 export function crearBanner(DatosUsuario, idPagina)   {
+    const cerrarSesion = async () => {
+        await logout();
+        window.location.href = "index.html";
+    };
+
     const Header = document.createElement('header');
     Header.className = 'header';
     Header.style.position = 'fixed';
@@ -81,19 +86,13 @@ export function crearBanner(DatosUsuario, idPagina)   {
             case 0:
                 datos = [
                 { nombre: "Mi Perfil", accion: () => window.location.href = "perfil.html" },
-                { nombre: "Cerrar Sesión", accion: () => {
-                logout();
-                 window.location.href = "index.html";
-                }}
+                { nombre: "Cerrar Sesión", accion: cerrarSesion }
                 ];
             break;
             case 1:
                 datos = [
                 { nombre: "Dashboard", accion: () => window.location.href = "dashboard.html" },
-                { nombre: "Cerrar Sesión", accion: () => {
-                logout();
-                window.location.href = "index.html";
-                }}
+                { nombre: "Cerrar Sesión", accion: cerrarSesion }
                 ];
             break;
             default:
@@ -104,19 +103,13 @@ export function crearBanner(DatosUsuario, idPagina)   {
         case 'dashboard.html':
             datos = [
                 { nombre: "Vista de Tareas", accion: () => window.location.href = "app.html" },
-                { nombre: "Cerrar Sesión", accion: () => {
-                logout();
-                window.location.href = "index.html";
-                }}
+                { nombre: "Cerrar Sesión", accion: cerrarSesion }
                 ];
         break;
         case 'perfil.html':
             datos = [
                 { nombre: "Vista de Tareas", accion: () => window.location.href = "app.html" },
-                { nombre: "Cerrar Sesión", accion: () => {
-                logout();
-                window.location.href = "index.html";
-                }}
+                { nombre: "Cerrar Sesión", accion: cerrarSesion }
                 ];
         break;
         default:
@@ -239,4 +232,3 @@ export function crearBanner(DatosUsuario, idPagina)   {
     }
 }
 
- 

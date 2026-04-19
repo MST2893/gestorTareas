@@ -1,6 +1,10 @@
-import { getMe } from '../app/chequeoToken.js';
+import { getMe } from '../app/F_getMe.js';
 
-export const API_URL_BASE = "http://localhost:5026";
+const API_HOST = window.location.hostname || "localhost";
+const API_PROTOCOL = window.location.protocol === "https:" ? "https:" : "http:";
+const API_PORT = API_PROTOCOL === "https:" ? "7044" : "5026";
+
+export const API_URL_BASE = `${API_PROTOCOL}//${API_HOST}:${API_PORT}`;
 
 const datosUsuario = await getMe();
 

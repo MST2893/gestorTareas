@@ -33,7 +33,7 @@ public class Tarea
     public DateTime Deadline {get;set;}
     public DateTime FechaCompletada {get;set;}
 
-    public int Estado {get;set;} //(0: Pendiente, 1: Haciendo, 3: Completada, 4: Cancelada)
+    public int Estado {get;set;} //(0: Pendiente, 1: Haciendo, 2: Completada, 3: Cancelada, 4: Caducada)
 
     //[NotMapped]
     [JsonIgnore]

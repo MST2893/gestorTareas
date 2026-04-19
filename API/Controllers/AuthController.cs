@@ -17,15 +17,18 @@ public sealed class AuthController : ControllerBase
     private readonly TareasContext _dbContext;
     private readonly IGoogleTokenValidator _googleTokenValidator;
     private readonly IJwtTokenService _jwtTokenService;
+    private readonly IConfiguration _configuration;
 
     public AuthController(
         TareasContext dbContext,
         IGoogleTokenValidator googleTokenValidator,
-        IJwtTokenService jwtTokenService)
+        IJwtTokenService jwtTokenService,
+        IConfiguration configuration)
     {
         _dbContext = dbContext;
         _googleTokenValidator = googleTokenValidator;
         _jwtTokenService = jwtTokenService;
+        _configuration = configuration;
     }
 
     [AllowAnonymous]
@@ -114,9 +117,13 @@ public sealed class AuthController : ControllerBase
 
         var (token, expiresAtUtc) = _jwtTokenService.CreateToken(user);
 
+        Response.Cookies.Append(
+            AuthCookieName,
+            token,
+            CreateAuthCookieOptions(expiresAtUtc));
+
         return Ok(new LoginResponse
         {
-            AccessToken = token,
             ExpiresAtUtc = expiresAtUtc,
             User = new AuthUserDto
             {
@@ -127,6 +134,14 @@ public sealed class AuthController : ControllerBase
                 PictureUrl = user.PictureUrl
             }
         });
+    }
+
+    [AllowAnonymous]
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete(AuthCookieName, CreateAuthCookieDeleteOptions());
+        return NoContent();
     }
 
     [Authorize]
@@ -158,4 +173,29 @@ public sealed class AuthController : ControllerBase
         });
     }
 
+    private string AuthCookieName =>
+        _configuration["Jwt:CookieName"] ?? "gestorTareas_access_token";
+
+    private CookieOptions CreateAuthCookieOptions(DateTime expiresAtUtc)
+    {
+        return new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = Request.IsHttps,
+            SameSite = Request.IsHttps ? SameSiteMode.None : SameSiteMode.Lax,
+            Expires = new DateTimeOffset(expiresAtUtc, TimeSpan.Zero),
+            Path = "/"
+        };
+    }
+
+    private CookieOptions CreateAuthCookieDeleteOptions()
+    {
+        return new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = Request.IsHttps,
+            SameSite = Request.IsHttps ? SameSiteMode.None : SameSiteMode.Lax,
+            Path = "/"
+        };
+    }
 }

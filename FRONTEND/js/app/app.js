@@ -2,7 +2,7 @@ import { cargarTarjetasTareas } from './F_cargarTarjetasTareas.js';
 
 import { API_URL, API_URL_CATEGORIAS, API_URL_TAREAS, API_URL_USUARIO } from '../general/api_urls.js';
 
-import { getMe } from './chequeoToken.js';
+import { getMe } from './F_getMe.js';
 
 import { logout } from '../general/F_cerrarSesion.js';
 
@@ -15,14 +15,22 @@ import { crearBanner } from '../general/F_crearBanner.js';
 
 
 
+
+
 import { Countdown } from './CLASS_Countdown.js';
+
+import { authCheck } from '../general/F_authCheck.js';
+
+authCheck();
 
 //const chequeoToken = document.getElementById('chequeoToken');
 //chequeoToken.addEventListener("click", () => {
 
 //document.addEventListener("DOMContentLoaded", async () => {
 
-const responseUsuario = await fetch(API_URL_USUARIO);
+const responseUsuario = await fetch(API_URL_USUARIO, {
+  credentials: "include"
+});
 const DatosUsuario = await responseUsuario.json();
 
 //crearFondo();
@@ -33,7 +41,9 @@ crearBanner(DatosUsuario, htmlActual);
 
 
 
-const response = await fetch(API_URL);
+const response = await fetch(API_URL, {
+  credentials: "include"
+});
 const tareas = await response.json();
 
 
@@ -115,7 +125,9 @@ const botonCargarMas = document.createElement('button');
         botonCargarMas.style.display = 'none';
 
         const categoriaSelect = document.getElementById('categoria-select');
-        fetch(`${API_URL_CATEGORIAS}`) // Cambia esta URL por la correcta para obtener categorías
+        fetch(`${API_URL_CATEGORIAS}`, {
+          credentials: "include"
+        }) // Cambia esta URL por la correcta para obtener categorías
           .then(res => res.json())
           .then(categorias => {
             console.log('Categorías recibidas:', categorias);
@@ -158,6 +170,7 @@ const botonCargarMas = document.createElement('button');
           console.log('Enviando:', body);
           fetch(`${API_URL_TAREAS}`, {
             method: 'POST',
+            credentials: "include",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
           }).then(res => {
