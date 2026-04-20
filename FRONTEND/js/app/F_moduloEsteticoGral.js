@@ -13,7 +13,7 @@ const altoMinimoCard = 130;
 
 for (const tarea of tareas) {
   const tarjetita = document.getElementById(String(tarea.tareaId));
-    aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId));
+    aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId), false);
 
     tarjetita.addEventListener("mouseenter", () => {
     
@@ -33,7 +33,7 @@ SeleccionSelectoresEstadoTareas.forEach(select => {
     const idTarea = select.id.replace('estado-tarea-select-', '');
     const valor = parseInt(select.value);
 
-    aplicarEstilosSegunEstado(valor, idTarea);
+    aplicarEstilosSegunEstado(valor, idTarea, true);
     //console.log("CAMBIO!", idTarea);
   });
 });

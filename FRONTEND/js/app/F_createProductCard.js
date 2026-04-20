@@ -4,8 +4,6 @@ import { API_URL_CATEGORIAS, API_URL_EDICION, API_URL_TAREAS } from '../general/
 //Importo funciones
 import { setStatus } from './F_setStatus.js';
 
-import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
-
 import { pedirDatosUsuario } from '../general/F_pedirDatosUsuario.js';
 
 import { ventanaConfirmacion } from './F_confirmWindow.js';

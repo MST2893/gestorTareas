@@ -18,7 +18,7 @@ export async function cargarTarjetasTareas() {
     const tareas = await response.json();
     //const firstNine = tareas.slice(0, 9);
     //renderizarTarjetasTareas(firstNine);
-    renderizarTarjetasTareas(tareas);
+    await renderizarTarjetasTareas(tareas);
 
     setStatus('Se cargaron las tareas correctamente.');
 

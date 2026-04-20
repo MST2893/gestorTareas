@@ -1,7 +1,6 @@
 // Importo funciones necesarias
 import { createProductCard } from './F_createProductCard.js';
 
-import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
 
 //Asigna un sector del HTML a una variable para su posterior manipulación
 

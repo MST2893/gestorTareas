@@ -7,7 +7,7 @@ import { crearBotonCargarMas } from './F_crearBtnCargarMas.js';
 import { prepararRelojesDeadline } from './F_prepararRelojesDeadline.js';
 import { moduloEsteticoGral } from './F_moduloEsteticoGral.js';
 
-authCheck(); // Chequea que el usuario esté autenticado, sino lo redirige al login
+await authCheck(); // Chequea que el usuario esté autenticado, sino lo redirige al login
 
 crearBanner(); // Crear banner superior
 

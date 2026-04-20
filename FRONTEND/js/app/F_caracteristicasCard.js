@@ -4,7 +4,7 @@ import { API_URL_EDICIONESTADO } from '../general/api_urls.js';
 let PrimeraVez = 0;
 let opacidadleave = 1;
 
-export async function aplicarEstilosSegunEstado(estado, idcard) {
+export async function aplicarEstilosSegunEstado(estado, idcard, modificarestado) {
   const textoestadoTarea = document.getElementById(`textoestadotarea-${idcard}`);
   const tarjetita = document.getElementById(idcard);
 
@@ -85,7 +85,8 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       Estado: estado,
     };
 
-  try {
+  if (modificarestado) {
+    try {
         const response = await fetch(`${API_URL_EDICIONESTADO}`, {
           method: 'PUT',
           credentials: "include",
@@ -101,8 +102,9 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
         } else {
           setStatus('Tarea actualizada correctamente.');
         }
-      } catch (error) {
+    } catch (error) {
           console.error(error);
           setStatus('Error de conexión al actualizar la tarea.');
-        }
+    }
+  }
 }
