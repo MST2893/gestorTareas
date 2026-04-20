@@ -3,19 +3,26 @@ import { API_URL_EDICIONESTADO } from '../general/api_urls.js';
 
 let PrimeraVez = 0;
 let opacidadleave = 1;
+let mousearriba = false;
 
 export async function aplicarEstilosSegunEstado(estado, idcard, modificarestado) {
   const textoestadoTarea = document.getElementById(`textoestadotarea-${idcard}`);
   const tarjetita = document.getElementById(idcard);
+  
+  
+
+  console.log ("Nueva pasada", mousearriba)
 
   if (!tarjetita.dataset.hoverAsignado) {
     tarjetita.addEventListener("mouseenter", () => {
     tarjetita.style.opacity = 1; // opacidad al hacer hover
+    mousearriba = true;
   });
 
   // Cuando el mouse sale
     tarjetita.addEventListener("mouseleave", () => {
     tarjetita.style.opacity = tarjetita.dataset.opacidadLeave || 1; // opacidad normal
+    mousearriba = false;
   });
 
   tarjetita.dataset.hoverAsignado = "true"; // Marcar que ya se asignó el evento hover  
@@ -46,7 +53,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard, modificarestado)
     case 2:
       tarjetita.style.boxShadow = "0px 0px 10px rgb(4, 255, 0, 1)";
       tarjetita.style.border = "3px solid rgb(9, 255, 0)";
-      tarjetita.style.opacity = 0.5;
+      if (!mousearriba) {tarjetita.style.opacity = 0.5;};
       tarjetita.dataset.opacidadLeave = 0.5;
       tarjetita.style.zIndex = "1";
       textoestadoTarea.textContent = 'Completado';
@@ -57,7 +64,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard, modificarestado)
       tarjetita.style.boxShadow = "0px 0px 10px rgb(63, 63, 63, 1)";
       tarjetita.style.border = "3px solid rgb(62, 62, 62)";
       tarjetita.dataset.opacidadLeave = 0.5;
-      tarjetita.style.opacity = 0.5;
+      if (!mousearriba) {tarjetita.style.opacity = 0.5;};
       tarjetita.style.zIndex = "1"; 
       textoestadoTarea.textContent = 'Cancelado';
       textoestadoTarea.style.color = 'gray';
@@ -67,7 +74,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard, modificarestado)
       tarjetita.style.boxShadow = "0px 0px 10px rgb(63, 63, 63, 1)";
       tarjetita.style.border = "3px solid rgb(255, 145, 0)";
       tarjetita.dataset.opacidadLeave = 0.5;
-      tarjetita.style.opacity = 0.5;
+      if (!mousearriba) {tarjetita.style.opacity = 0.5;};
       tarjetita.style.zIndex = "1"; 
       textoestadoTarea.textContent = 'Caducado';
       textoestadoTarea.style.color = 'rgb(255, 145, 0)';
