@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 //using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 //using APITEST.Data;
+using APITEST.Services;
 using APITEST.Services.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +44,7 @@ var allowedFrontendOrigins = new[]
 
 builder.Services.AddScoped<IGoogleTokenValidator, GoogleTokenValidator>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddHostedService<TareasDeadlineMonitorService>();
 
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("Falta Jwt:Key.");

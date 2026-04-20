@@ -1,6 +1,12 @@
 import { logout } from './F_cerrarSesion.js';
+import { pedirDatosUsuario } from './F_pedirDatosUsuario.js';
 
-export function crearBanner(DatosUsuario, idPagina)   {
+export async function crearBanner()   {
+    
+    const DatosUsuario = await pedirDatosUsuario();
+    
+    const idPagina = window.location.pathname.split("/").pop();
+    
     const cerrarSesion = async () => {
         await logout();
         window.location.href = "index.html";
@@ -118,6 +124,7 @@ export function crearBanner(DatosUsuario, idPagina)   {
 
     }
     
+    
 
     for (const items of datos)    {
     const ItemLista = document.createElement('li');
@@ -148,7 +155,10 @@ export function crearBanner(DatosUsuario, idPagina)   {
     const ItemListaFoto = document.createElement('div')
     
     ItemListaFoto.style.height = '100%';
-    ItemListaFoto.style.display = 'flex';
+    ItemListaFoto.style.display = 'grid';
+    ItemListaFoto.style.paddingRight = '20px';
+    ItemListaFoto.style.paddingLeft = '20px';
+    ItemListaFoto.style.placeItems = 'center';
     ItemListaFoto.style.alignItems = 'center';
     ItemListaFoto.style.transition = 'background-color 0.20s ease';
     ItemListaFoto.addEventListener("mouseenter", () => {
@@ -163,13 +173,26 @@ export function crearBanner(DatosUsuario, idPagina)   {
     ItemListaFoto.style.backgroundColor = 'transparent';
   });
 
+    if (DatosUsuario.permisos === 1) {
+        const anilloAdmin = document.createElement('div');
+        anilloAdmin.style.width = '45px';
+        anilloAdmin.style.height = '45px';
+        anilloAdmin.style.border = '2px solid #00ff11';
+        anilloAdmin.style.borderRadius = '50%';
+        anilloAdmin.style.color = 'transparent';
+        anilloAdmin.style.zIndez = '11';
+        anilloAdmin.style.gridArea = '1 / 1';
+
+        ItemListaFoto.appendChild(anilloAdmin);
+    }
+
     const FotoPerfil = document.createElement('img');
     FotoPerfil.src = DatosUsuario.fotoPerfil || '/img/app_bg.jpg';
     FotoPerfil.style.width = '40px';
     FotoPerfil.style.height = '40px';
     FotoPerfil.style.borderRadius = '50%';
-    FotoPerfil.style.paddingRight = '20px';
-    FotoPerfil.style.paddingLeft = '20px';
+    FotoPerfil.style.zIndex = '12';
+    FotoPerfil.style.gridArea = '1 / 1';
     
     ItemListaFoto.appendChild(FotoPerfil);
 

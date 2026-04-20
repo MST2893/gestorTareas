@@ -35,7 +35,7 @@ public class TareasContext: DbContext
 
         List<Tarea> tareasInit = new List<Tarea>();
 
-        DateTime Fecha = DateTime.Today;
+        DateTime Fecha = new DateTime(2026, 4, 9, 0, 0, 0, DateTimeKind.Local);
 
         tareasInit.Add(new Tarea() { TareaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb410"), CategoriaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb4ef"), PrioridadTarea = Prioridad.Media, Titulo = "Pago de servicios publicos", FechaCreacion = Fecha });
         tareasInit.Add(new Tarea() { TareaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb411"), CategoriaId = Guid.Parse("fe2de405-c38e-4c90-ac52-da0540dfb402"), PrioridadTarea = Prioridad.Baja, Titulo = "Terminar de ver pelicula en netflix", FechaCreacion = Fecha });
@@ -46,6 +46,8 @@ public class TareasContext: DbContext
             tarea.HasKey(p=> p.TareaId);
 
             tarea.HasOne(p=> p.Categoria).WithMany(p=> p.Tareas).HasForeignKey(p=> p.CategoriaId);
+
+            tarea.HasIndex(p=> new { p.Deadline, p.Estado }).HasDatabaseName("IX_Tarea_Deadline_Estado");
 
             tarea.Property(p=> p.Titulo).IsRequired().HasMaxLength(200);
 

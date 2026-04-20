@@ -154,6 +154,9 @@ namespace APITEST.Migrations
 
                     b.HasIndex("CategoriaId");
 
+                    b.HasIndex("Deadline", "Estado")
+                        .HasDatabaseName("IX_Tarea_Deadline_Estado");
+
                     b.ToTable("Tarea", (string)null);
 
                     b.HasData(
