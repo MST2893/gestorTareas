@@ -32,7 +32,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.zIndex = "3";
       textoestadoTarea.textContent = 'Pendiente';
       textoestadoTarea.style.color = 'red';
-      console.log("Rojo");
+      //console.log("Rojo");
       break;
     case 1:
       tarjetita.style.boxShadow = "0px 0px 10px rgb(0, 94, 255, 1)";
@@ -41,7 +41,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.zIndex = "2";
       textoestadoTarea.textContent = 'Haciendo';
       textoestadoTarea.style.color = 'blue';
-      console.log("Azul");
+      //console.log("Azul");
       break;
     case 2:
       tarjetita.style.boxShadow = "0px 0px 10px rgb(4, 255, 0, 1)";
@@ -51,7 +51,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.zIndex = "1";
       textoestadoTarea.textContent = 'Completado';
       textoestadoTarea.style.color = 'green';
-      console.log("Verde");
+      //console.log("Verde");
       break;
     case 3:
       tarjetita.style.boxShadow = "0px 0px 10px rgb(63, 63, 63, 1)";
@@ -61,7 +61,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.zIndex = "1"; 
       textoestadoTarea.textContent = 'Cancelado';
       textoestadoTarea.style.color = 'gray';
-      console.log("Gris");
+      //console.log("Gris");
       break;
       case 4:
       tarjetita.style.boxShadow = "0px 0px 10px rgb(63, 63, 63, 1)";
@@ -71,7 +71,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
       tarjetita.style.zIndex = "1"; 
       textoestadoTarea.textContent = 'Caducado';
       textoestadoTarea.style.color = 'rgb(255, 145, 0)';
-      console.log("Gris");
+      //console.log("Gris");
       break;
     default:
       textoestadoTarea.style.color = 'black';
@@ -93,7 +93,7 @@ export async function aplicarEstilosSegunEstado(estado, idcard) {
           body: JSON.stringify(datosActualizados)
         });
   
-        console.log(datosActualizados);
+        //console.log(datosActualizados);
   
         if (!response.ok) {
           setStatus('Error al actualizar la tarea.');

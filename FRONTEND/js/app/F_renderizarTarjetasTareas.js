@@ -9,14 +9,14 @@ const grid = document.querySelector('#grid-tareas');
 
 //Renderiza todas las tarjetas de tareas en conjunto
 
-export function renderizarTarjetasTareas(tareas) {
+export async function renderizarTarjetasTareas(tareas) {
   grid.innerHTML = '';
 
   // Ciclo para renderizar cada tarjeta de tarea individualmente
 
   for (const tarea of tareas) {
 
-    const card = createProductCard(tarea);
+    const card = await createProductCard(tarea);
     grid.append(card);
     
     //aplicarEstilosSegunEstado(tarea.estado, String(tarea.tareaId));

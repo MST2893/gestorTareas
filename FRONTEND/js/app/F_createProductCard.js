@@ -6,8 +6,12 @@ import { setStatus } from './F_setStatus.js';
 
 import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
 
+import { pedirDatosUsuario } from '../general/F_pedirDatosUsuario.js';
 
-export function createProductCard(tarea) {
+import { ventanaConfirmacion } from './F_confirmWindow.js';
+
+
+export async function createProductCard(tarea) {
   const card = document.createElement('article');
   card.className = 'card';
   card.id = `${tarea.tareaId}`;
@@ -175,6 +179,7 @@ export function createProductCard(tarea) {
   botonEditar.textContent = 'Editar';
   botonEditar.className = 'boton-editar';
   
+  //console.log("Botones Eliminar y Editar creados de:", tarea.titulo);
 
   const estadoTareaSelect = document.createElement('select');
   estadoTareaSelect.className = 'estado-tarea-select';
@@ -201,6 +206,7 @@ export function createProductCard(tarea) {
     estadoTareaSelect.appendChild(option);
   }
   estadoTareaSelect.value = tarea.estado;
+  estadoTareaSelect.style.marginRight = '8px';
 
   //const tarjetita = document.getElementsByClassName('card');
 
@@ -339,21 +345,11 @@ function desactivarModoEdicion() {
     }
   });
 
-  botonEliminar.addEventListener('click', async () => {
-    try {
-      const response = await fetch(`${API_URL_TAREAS}/${tarea.tareaId}`, {
-        method: 'DELETE',
-        credentials: "include"
-      });
-      if (response.ok) {
-        card.remove();
-        setStatus('Tarea eliminada correctamente.');
-      } else {
-        setStatus('Error al eliminar la tarea.');
-      }
-    } catch (error) {
-      setStatus('Error de conexión al eliminar.');
-    }
+  botonEliminar.addEventListener('click', () => {
+    //try {
+      //console.log("Click Overlay");
+      ventanaConfirmacion(tarea, card);
+      
   });
 
   card.append(
@@ -373,13 +369,21 @@ function desactivarModoEdicion() {
     botonGuardar,
     botonCancelarEdicion
   );
-  if (tarea.tareaUsuariosR[0].usuario.Permisos == 1){
+
+  const DatosDelUsuario = await pedirDatosUsuario();
+
+  //console.log(DatosDelUsuario);
+
+  if (DatosDelUsuario.permisos == 1){
+    //console.log("Es admin, se muestran botones de editar y eliminar");
     card.append(
   
     botonEliminar,
     botonEditar
 
   );
+  } else {
+    //console.log("No es admin, no se muestran botones de editar y eliminar");
   }
 
   

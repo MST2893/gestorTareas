@@ -34,7 +34,7 @@ SeleccionSelectoresEstadoTareas.forEach(select => {
     const valor = parseInt(select.value);
 
     aplicarEstilosSegunEstado(valor, idTarea);
-    console.log("CAMBIO!", idTarea);
+    //console.log("CAMBIO!", idTarea);
   });
 });
 
