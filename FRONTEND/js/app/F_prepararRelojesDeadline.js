@@ -1,5 +1,6 @@
 import { API_URL } from '../general/api_urls.js';
 import { Countdown } from './CLASS_Countdown.js';
+import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
 
 export async function prepararRelojesDeadline() {
 
@@ -29,10 +30,28 @@ const response = await fetch(API_URL, {
             relojito.forEach(r => r.update());
         }, 1000);
 
+        
+
 
     }
 
     a++;
 
   }
+
+  setInterval( async () => {
+            let responseMedido = await fetch(API_URL, {
+              credentials: "include"
+            });
+
+            let tareasMedido = await responseMedido.json();
+
+            for (const tarea of tareasMedido) {
+            aplicarEstilosSegunEstado(tarea.estado, tarea.tareaId, false);
+            const selectorEstado = document.getElementById(`estado-tarea-select-${tarea.tareaId}`)
+            selectorEstado.value = tarea.estado;
+            }
+        }, 5000);
+
+  
 }
