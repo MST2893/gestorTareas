@@ -2,56 +2,63 @@ import { API_URL } from '../general/api_urls.js';
 import { Countdown } from './CLASS_Countdown.js';
 import { aplicarEstilosSegunEstado } from './F_caracteristicasCard.js';
 
-export async function prepararRelojesDeadline() {
+let intervaloRelojesId = null;
+let intervaloEstadosId = null;
 
-const response = await fetch(API_URL, {
-  credentials: "include"
-});
+export async function prepararRelojesDeadline(tareasRenderizadas = null) {
+  let tareas = tareasRenderizadas;
 
-  const tareas = await response.json();
+  if (!tareas) {
+    const response = await fetch(API_URL, {
+      credentials: "include"
+    });
+    tareas = await response.json();
+  }
 
-  let a = 0;
-  const relojito = [];
+  if (intervaloRelojesId) {
+    clearInterval(intervaloRelojesId);
+  }
+
+  if (intervaloEstadosId) {
+    clearInterval(intervaloEstadosId);
+  }
+
+  const relojes = [];
 
   for (const tarea of tareas) {
     const relojDeterminado = document.getElementById(`relojTarea-${tarea.tareaId}`);
     const deadlineStr = tarea.deadline;
-    
-    
-    if (deadlineStr) {
-        const deadline = new Date(deadlineStr); // ← Importante: usar NEW Date()
-        
-        relojito[a] = new Countdown(relojDeterminado, deadline);
 
-        // ---------------------------------------
-        // ÚNICO intervalo para actualizarlos a todos
-        // ---------------------------------------
-        setInterval(() => {
-            relojito.forEach(r => r.update());
-        }, 1000);
-
-        
-
-
+    if (!relojDeterminado || !deadlineStr) {
+      continue;
     }
 
-    a++;
-
+    const deadline = new Date(deadlineStr);
+    const reloj = new Countdown(relojDeterminado, deadline);
+    reloj.update();
+    relojes.push(reloj);
   }
 
-  setInterval( async () => {
-            let responseMedido = await fetch(API_URL, {
-              credentials: "include"
-            });
+  intervaloRelojesId = setInterval(() => {
+    relojes.forEach(reloj => reloj.update());
+  }, 1000);
 
-            let tareasMedido = await responseMedido.json();
+  intervaloEstadosId = setInterval(async () => {
+    const responseMedido = await fetch(API_URL, {
+      credentials: "include"
+    });
 
-            for (const tarea of tareasMedido) {
-            aplicarEstilosSegunEstado(tarea.estado, tarea.tareaId, false);
-            const selectorEstado = document.getElementById(`estado-tarea-select-${tarea.tareaId}`)
-            selectorEstado.value = tarea.estado;
-            }
-        }, 5000);
+    const tareasMedido = await responseMedido.json();
 
-  
+    for (const tarea of tareasMedido) {
+      const selectorEstado = document.getElementById(`estado-tarea-select-${tarea.tareaId}`);
+
+      if (!selectorEstado) {
+        continue;
+      }
+
+      aplicarEstilosSegunEstado(tarea.estado, tarea.tareaId, false);
+      selectorEstado.value = tarea.estado;
+    }
+  }, 5000);
 }

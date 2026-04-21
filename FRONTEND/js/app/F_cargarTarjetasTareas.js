@@ -6,19 +6,19 @@ import { setStatus } from './F_setStatus.js';
 import { renderizarTarjetasTareas } from './F_renderizarTarjetasTareas.js';
 
 
-export async function cargarTarjetasTareas() {
+export async function cargarTarjetasTareas(tareasFiltradas) {
 
   try {
     
     setStatus('Cargando Tareas...');
 
-    const response = await fetch(API_URL, {
-      credentials: "include"
-    });
-    const tareas = await response.json();
+    //const response = await fetch(API_URL, {
+    //  credentials: "include"
+    //});
+    //const tareas = await response.json();
     //const firstNine = tareas.slice(0, 9);
     //renderizarTarjetasTareas(firstNine);
-    await renderizarTarjetasTareas(tareas);
+    await renderizarTarjetasTareas(tareasFiltradas);
 
     setStatus('Se cargaron las tareas correctamente.');
 

@@ -223,10 +223,15 @@ app.MapPut("/api/edicionestado", async ([FromServices] TareasContext dbContext, 
 
 app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext) =>
 {
-    var tareas = await dbContext.Tareas
-        .Include(t => t.Categoria)
-        .Include(t => t.TareaUsuariosR)                // <- tabla intermedia
-            .ThenInclude(rel => rel.Usuario)          // <- usuario asignado
+    var tareas = await ConsultaTareasConUsuario(dbContext)
+        .ToListAsync();
+
+    return Results.Ok(tareas);
+}).RequireAuthorization();
+
+app.MapGet("/api/tareasyusuario/{busqueda}/{orden:int}", async ([FromServices] TareasContext dbContext, [FromRoute] string busqueda, [FromRoute] int orden) =>
+{
+    var tareas = await AplicarBusquedaYOrden(ConsultaTareasConUsuario(dbContext), busqueda, orden)
         .ToListAsync();
 
     return Results.Ok(tareas);
@@ -234,12 +239,22 @@ app.MapGet("/api/tareasyusuario", async ([FromServices] TareasContext dbContext)
 
 app.MapGet("/api/tareasyusuario/{mailGoogle}", async ([FromServices] TareasContext dbContext, [FromRoute] string mailGoogle) =>
 {
-    var tareas = await dbContext.Tareas
+    var tareas = await ConsultaTareasConUsuario(dbContext)
         .Where(t => t.TareaUsuariosR
             .Any(rel => rel.Usuario != null && rel.Usuario.Email == mailGoogle))
-        .Include(t => t.Categoria)
-        .Include(t => t.TareaUsuariosR)                // <- tabla intermedia
-            .ThenInclude(rel => rel.Usuario)          // <- usuario asignado
+        .ToListAsync();
+
+    return Results.Ok(tareas);
+}).RequireAuthorization();
+
+app.MapGet("/api/tareasyusuario/{mailGoogle}/{busqueda}/{orden:int}", async ([FromServices] TareasContext dbContext, [FromRoute] string mailGoogle, [FromRoute] string busqueda, [FromRoute] int orden) =>
+{
+    var tareas = await AplicarBusquedaYOrden(
+            ConsultaTareasConUsuario(dbContext)
+                .Where(t => t.TareaUsuariosR
+                    .Any(rel => rel.Usuario != null && rel.Usuario.Email == mailGoogle)),
+            busqueda,
+            orden)
         .ToListAsync();
 
     return Results.Ok(tareas);
@@ -260,3 +275,127 @@ app.MapGet("/api/authCheck", () =>
 }).RequireAuthorization();
 
 app.Run();
+
+static IQueryable<Tarea> ConsultaTareasConUsuario(TareasContext dbContext)
+{
+    return dbContext.Tareas
+        .Include(t => t.Categoria)
+        .Include(t => t.TareaUsuariosR)
+            .ThenInclude(rel => rel.Usuario);
+}
+
+static IQueryable<Tarea> AplicarBusquedaYOrden(IQueryable<Tarea> query, string? busqueda, int orden)
+{
+    var textoBusqueda = (busqueda ?? string.Empty).Trim().ToLower();
+
+    if (!string.IsNullOrWhiteSpace(textoBusqueda))
+    {
+        var prioridades = ObtenerPrioridades(textoBusqueda);
+        var estados = ObtenerEstados(textoBusqueda);
+
+        query = (prioridades.Length, estados.Length) switch
+        {
+            (0, 0) => query.Where(t =>
+                t.Titulo != null &&
+                t.Titulo.ToLower().Contains(textoBusqueda)),
+            (_, 0) => query.Where(t =>
+                (t.Titulo != null && t.Titulo.ToLower().Contains(textoBusqueda)) ||
+                prioridades.Contains(t.PrioridadTarea)),
+            (0, _) => query.Where(t =>
+                (t.Titulo != null && t.Titulo.ToLower().Contains(textoBusqueda)) ||
+                estados.Contains(t.Estado)),
+            _ => query.Where(t =>
+                (t.Titulo != null && t.Titulo.ToLower().Contains(textoBusqueda)) ||
+                prioridades.Contains(t.PrioridadTarea) ||
+                estados.Contains(t.Estado))
+        };
+    }
+
+    return orden switch
+    {
+        1 => query
+            .OrderByDescending(t => t.PrioridadTarea)
+            .ThenBy(t => t.Estado)
+            .ThenBy(t => t.Deadline == default ? 1 : 0)
+            .ThenBy(t => t.Deadline)
+            .ThenByDescending(t => t.FechaCreacion),
+        2 => query
+            .OrderBy(t => t.Deadline == default ? 1 : 0)
+            .ThenBy(t => t.Deadline)
+            .ThenBy(t => t.Estado)
+            .ThenByDescending(t => t.PrioridadTarea)
+            .ThenByDescending(t => t.FechaCreacion),
+        _ => query
+            .OrderByDescending(t => t.FechaCreacion)
+            .ThenByDescending(t => t.PrioridadTarea)
+            .ThenBy(t => t.Estado)
+            .ThenBy(t => t.Deadline == default ? 1 : 0)
+            .ThenBy(t => t.Deadline)
+    };
+}
+
+static Prioridad[] ObtenerPrioridades(string textoBusqueda)
+{
+    var prioridades = new List<Prioridad>();
+
+    if (textoBusqueda.Contains("alta"))
+    {
+        prioridades.Add(Prioridad.Alta);
+    }
+
+    if (textoBusqueda.Contains("media"))
+    {
+        prioridades.Add(Prioridad.Media);
+    }
+
+    if (textoBusqueda.Contains("baja"))
+    {
+        prioridades.Add(Prioridad.Baja);
+    }
+
+    return prioridades.ToArray();
+}
+
+static int[] ObtenerEstados(string textoBusqueda)
+{
+    var estados = new List<int>();
+
+    if (textoBusqueda.Contains("pendiente"))
+    {
+        estados.Add(0);
+    }
+
+    if (textoBusqueda.Contains("haciendo"))
+    {
+        estados.Add(1);
+    }
+
+    if (textoBusqueda.Contains("completada"))
+    {
+        estados.Add(2);
+    }
+    if (textoBusqueda.Contains("completado"))
+    {
+        estados.Add(2);
+    }
+
+    if (textoBusqueda.Contains("cancelada"))
+    {
+        estados.Add(3);
+    }
+    if (textoBusqueda.Contains("cancelado"))
+    {
+        estados.Add(3);
+    }
+
+    if (textoBusqueda.Contains("caducada"))
+    {
+        estados.Add(4);
+    }
+    if (textoBusqueda.Contains("caducado"))
+    {
+        estados.Add(4);
+    }
+
+    return estados.ToArray();
+}

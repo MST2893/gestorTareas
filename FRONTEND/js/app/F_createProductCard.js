@@ -110,10 +110,19 @@ export async function createProductCard(tarea) {
   inputTitulo.value = tarea.titulo;
   inputTitulo.className = 'titulo-input';
   inputTitulo.style.display = 'none';
+  inputTitulo.style.fontSize = "25px";
+  inputTitulo.style.fontWeight = 'bold';
+
+  const categoriaSelectText = document.createElement('p');
+  categoriaSelectText.style.display = 'none';
+  categoriaSelectText.style.fontSize = '20px';
+  categoriaSelectText.textContent = 'Categoría: '
+  categoriaSelectText.style.fontFamily = 'Roboto Condensed';
 
   const categoriaSelect = document.createElement('select');
   categoriaSelect.className = 'categoria-select';
   categoriaSelect.style.display = 'none';
+  categoriaSelect.style.fontSize = "20px";
 
   const inputDescripcion = document.createElement('input');
   inputDescripcion.type = 'text';
@@ -253,6 +262,7 @@ export async function createProductCard(tarea) {
     prioridadTarea.style.display = 'none';
 
     inputTitulo.style.display = 'block';
+    categoriaSelectText.style.display = 'block';
     categoriaSelect.style.display = 'block';
     inputDescripcion.style.display = 'block';
     prioridadSelect.style.display = 'block';
@@ -270,6 +280,7 @@ function desactivarModoEdicion() {
     prioridadTarea.style.display = 'block';
 
     inputTitulo.style.display = 'none';
+    categoriaSelectText.style.display = 'none';
     categoriaSelect.style.display = 'none';
     inputDescripcion.style.display = 'none';
     prioridadSelect.style.display = 'none';
@@ -354,11 +365,12 @@ function desactivarModoEdicion() {
     titulo,
     textoestadoTarea,
     inputTitulo,
+    categoriaSelectText,
+    categoriaSelect,
     categoriaTarea,
     tituloDeadline,
     relojTarea,
     hacedorTarea,
-    categoriaSelect,
     descripcionTarea,
     inputDescripcion,
     prioridadTarea,

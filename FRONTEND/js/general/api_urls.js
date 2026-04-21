@@ -1,4 +1,5 @@
 import { getMe } from '../app/F_getMe.js';
+import { pedirDatosUsuario } from './F_pedirDatosUsuario.js';
 
 const API_HOST = window.location.hostname || "localhost";
 const API_PROTOCOL = window.location.protocol === "https:" ? "https:" : "http:";
@@ -6,13 +7,25 @@ const API_PORT = API_PROTOCOL === "https:" ? "7044" : "5026";
 
 export const API_URL_BASE = `${API_PROTOCOL}//${API_HOST}:${API_PORT}`;
 
-const datosUsuario = await getMe();
+const datosUsuarioGoogle = await getMe();
 
-const MailGoogle = datosUsuario?.email;
-
-export const API_URL = `${API_URL_BASE}/api/tareasyusuario/${MailGoogle}`;
+const MailGoogle = datosUsuarioGoogle?.email;
 
 export const API_URL_USUARIO = `${API_URL_BASE}/api/usuario/${MailGoogle}`;
+
+const datosUsuarioTabla = await pedirDatosUsuario();
+
+let VAPI_URL;
+
+if (datosUsuarioTabla.permisos == 0) {
+    VAPI_URL = `${API_URL_BASE}/api/tareasyusuario/${MailGoogle}`;
+}
+if (datosUsuarioTabla.permisos == 1) {
+    VAPI_URL = `${API_URL_BASE}/api/tareasyusuario`;
+    console.log (datosUsuarioTabla?.permisos);
+}
+
+export const API_URL = VAPI_URL;
 
 export const API_URL_EDICIONESTADO = `${API_URL_BASE}/api/edicionestado`;
 

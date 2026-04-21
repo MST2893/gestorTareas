@@ -9,9 +9,13 @@ export async function aplicarEstilosSegunEstado(estado, idcard, modificarestado)
   const textoestadoTarea = document.getElementById(`textoestadotarea-${idcard}`);
   const tarjetita = document.getElementById(idcard);
   
+  if (!tarjetita || !textoestadoTarea) {
+    return;
+  }
+  
   
 
-  console.log ("Nueva pasada", mousearriba)
+  //console.log ("Nueva pasada", mousearriba)
 
   if (!tarjetita.dataset.hoverAsignado) {
     tarjetita.addEventListener("mouseenter", () => {
