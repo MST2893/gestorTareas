@@ -4,8 +4,9 @@ export function crearBotonCargarMas() {
     const seccargarmas = document.querySelector('#sec-cargarmas');
     
     const botonCargarMas = document.createElement('button');
-        botonCargarMas.textContent = '+';
+        botonCargarMas.textContent = '+ Agregar Tarea';
         botonCargarMas.className = 'boton-cargar-mas';
+        botonCargarMas.style.fontSize = '15px';
         botonCargarMas.id = 'boton-cargar-mas';
         seccargarmas.append(botonCargarMas);
     

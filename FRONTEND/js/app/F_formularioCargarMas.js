@@ -2,36 +2,121 @@ import { API_URL_CATEGORIAS } from '../general/api_urls.js';
 
 export function formularioCargarMas() {
     
-    const seccargarmas = document.querySelector('#sec-cargarmas');
+    const seccargarmas = document.getElementById('sec-cargarmas');
+
     const botonCargarMas = document.getElementById('boton-cargar-mas');
     
-    let section = document.getElementById('form-section');
-        section = document.createElement('section');
+    // const section = document.getElementById('form-section');
+    const section = document.createElement('section');
         section.id = 'form-section';
-        section.innerHTML = `
-          <h2 class="tituloagregartarea" >Agregar Nueva Tarea</h2>
-          <input type="text" class="titulo-input" id="titulo-input" placeholder="Título de la tarea">
-          <select id="prioridad-select">
-            <option value="0">Prioridad Baja</option>
-            <option value="1">Prioridad Media</option>
-            <option value="2">Prioridad Alta</option>
-          </select>
-          <input type="text" class="descripcion-input" id="descripcion-input" placeholder="Descripción de la tarea">
-          <select id="categoria-select" disabled>
-            <option>Cargando categorías...</option>
-          </select>
-          <div class="botones-container">
-            <button class="cancelaragregado-btn" id="cancelar-btn">Cancelar</button>
-            <button class="enviartarea-btn" id="enviar-btn">Cargar</button>
-          </div>
-        `;
+    
+    const rowCero = document.createElement('section');
+          rowCero.id = 'row-cero';
+
+    const tituloAgregarTarea = document.createElement('h2');
+          tituloAgregarTarea.className = 'tituloagregartarea';
+          tituloAgregarTarea.textContent = 'Agregar Nueva Tarea';
+    
+    const primerRow = document.createElement('section');
+          primerRow.id = 'primer-row';
+
+    const tituloInput = document.createElement('input');
+          tituloInput.type = 'text';
+          tituloInput.className = 'titulo-input';
+          tituloInput.id = 'titulo-input';
+          tituloInput.placeholder = 'Título de la tarea';
+
+    const prioridadSelect = document.createElement('select')
+          prioridadSelect.id = 'prioridad-select';
+    const opcionesPrioridadSelect = {
+          0: 'Prioridad Baja',
+          1: 'Prioridad Media',
+          2: 'Prioridad Alta'
+          };
+
+          for (const valor in opcionesPrioridadSelect) {
+              const optionPS = document.createElement('option');
+              optionPS.value = valor;
+              optionPS.textContent = opcionesPrioridadSelect[valor];
+              prioridadSelect.appendChild(optionPS);
+              }
+
+    const segundoRow = document.createElement('section');
+          segundoRow.id = 'segundo-row';
+
+    const descripcionInput = document.createElement('input');
+          descripcionInput.type = 'text';
+          descripcionInput.className = 'descripcion-input';
+          descripcionInput.id = 'descripcion-input';
+          descripcionInput.placeholder = 'Descripción de la tarea';
+
+    const categoriaSelect = document.createElement('select');
+          categoriaSelect.id = 'categoria-select';
+          categoriaSelect.disabled = true;
+          categoriaSelect.value = 'Cargando categorias...';
+
+
+    const tercerRow = document.createElement('section');
+          tercerRow.id = 'tercer-row';
+          tercerRow.style.display = 'flex';
+          tercerRow.style.alignItems = 'center';
+          tercerRow.style.justifyContent = 'center';
+    
+    const textoIFD = document.createElement('p');
+          textoIFD.id = 'texto-ifd';
+          textoIFD.textContent = 'Deadline:';
+          textoIFD.style.fontFamily = 'Roboto Condensed';
+
+    const inputFechaDeadline = document.createElement('input');
+          inputFechaDeadline.type = 'date';
+          inputFechaDeadline.id = 'input-fecha-deadline';
+          inputFechaDeadline.style.fontFamily = 'Roboto Condensed';
+          inputFechaDeadline.style.fontSize = '14px';
+    
+    const textoBM = document.createElement('p');
+          textoBM.id = 'texto-bm';
+          textoBM.textContent = 'A cargo de:'
+          textoBM.style.fontFamily = 'Roboto Condensed';
+
+    const botonMultiselect = document.createElement('button');
+          botonMultiselect.id = 'boton-multiselect';
+          botonMultiselect.textContent = 'Multiselect'
+          botonMultiselect.style.fontFamily = 'Roboto Condensed';
+          botonMultiselect.style.fontSize = '14px';
+
+
+    const botonesContainer = document.createElement('div');
+          botonesContainer.className = 'botones-container';
+
+    const cancelarAgregadoBtn = document.createElement('button');
+          cancelarAgregadoBtn.className = 'cancelaragregado-btn';
+          cancelarAgregadoBtn.id = 'cancelar-btn'
+          cancelarAgregadoBtn.textContent = 'Cancelar';
+
+    const enviarTareaBtn = document.createElement('button');
+          enviarTareaBtn.className = 'enviartarea-btn';
+          enviarTareaBtn.id = 'enviar-btn';
+          enviarTareaBtn.textContent = 'Cargar'
+
+    botonesContainer.append(cancelarAgregadoBtn, enviarTareaBtn);
+    
+    rowCero.append(tituloAgregarTarea);
+    primerRow.append(tituloInput, prioridadSelect);
+    segundoRow.append(descripcionInput, categoriaSelect);
+    tercerRow.append(textoIFD, inputFechaDeadline, textoBM, botonMultiselect);
+
+    section.append(
+      rowCero,
+      primerRow,
+      segundoRow,
+      tercerRow,
+      botonesContainer
+    )
 
         const anchoBaseANT = 650;
         section.style.width = window.innerWidth < 700 ? `${Math.trunc(anchoBaseANT*(window.innerWidth/700))}px` : `${anchoBaseANT}px`;
         seccargarmas.insertBefore(section, botonCargarMas);
         
-
-        const categoriaSelect = document.getElementById('categoria-select');
         fetch(`${API_URL_CATEGORIAS}`, {
           credentials: "include"
         }) // Cambia esta URL por la correcta para obtener categorías

@@ -228,21 +228,23 @@ h4 {
 .boton-cargar-mas {
     font-family: 'Roboto Condensed';
     text-align: center;
-    margin: 16px auto 0 auto;
+    margin: 0;
+    padding: 0;
     width: 200px;
-    padding: 0px 6px;
     font-size: 30px;
     color: #000000;
     background-color: #ffffff;
-    border: 1px solid #007510;
+    border: 1px solid #00b318;
     border-radius: 14px;
     cursor: pointer;
-    transition: background-color 0.20s ease, color 0.20s ease;
+    opacity: 0.5;
+    transition: background-color 0.20s ease, color 0.20s ease, opacity 0.20s ease;
 }
 
 .boton-cargar-mas:hover {
-    background-color: #187800;
+    background-color: #28ca00;
     color: #ffffff;
+    opacity: 1;
 }
 
 /*.card h3 {
@@ -470,8 +472,15 @@ h4 {
     color: #ffffff;
 }
 
+.sec-cargarmas {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 12px;
+}
+
 @media (max-width: 600px) {
     #form-section {
         width: 100%;
     }
 }
+
