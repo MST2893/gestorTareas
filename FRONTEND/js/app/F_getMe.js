@@ -6,6 +6,18 @@ export async function getMe() {
     credentials: "include"
   });
 
+  if (response.status === 401) {
+    console.log('Te redirijo.')
+    window.location.href = "index.html";
+    throw new Error("Sesion no autenticada.");
+  }
+
+  if (!response.ok) {
+    console.log('Te redirijo 2.')
+    window.location.href = "index.html";
+    throw new Error("No se pudo validar la sesion.");
+  }
+
   if (response.ok) {
     const data = await response.json();
     return data;

@@ -10,6 +10,9 @@ import { prepararRelojesDeadline } from './F_prepararRelojesDeadline.js';
 import { moduloEsteticoGral } from './F_moduloEsteticoGral.js';
 import { setStatus } from './F_setStatus.js';
 
+// AGREGAR BUSQUEDA POR EL USUARIO QUE REALIZA LA TAREA
+// AGREGAR FILTRADO CHECKLIST, PARA VER LAS TAREAS QUE REALIZA TAL O TALES PERSONAS.
+
 await authCheck(); // Chequea que el usuario esté autenticado, sino lo redirige al login
 
 crearBanner(); // Crear banner superior
