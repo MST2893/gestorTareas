@@ -1,4 +1,5 @@
 import { API_URL_CATEGORIAS } from '../general/api_urls.js';
+import { checkSelector } from './F_checkSelector.js';
 
 export function formularioCargarMas() {
     
@@ -25,6 +26,7 @@ export function formularioCargarMas() {
           tituloInput.className = 'titulo-input';
           tituloInput.id = 'titulo-input';
           tituloInput.placeholder = 'Título de la tarea';
+          tituloInput.style.marginRight = '8px';
 
     const prioridadSelect = document.createElement('select')
           prioridadSelect.id = 'prioridad-select';
@@ -49,6 +51,7 @@ export function formularioCargarMas() {
           descripcionInput.className = 'descripcion-input';
           descripcionInput.id = 'descripcion-input';
           descripcionInput.placeholder = 'Descripción de la tarea';
+          descripcionInput.style.marginRight = '8px';
 
     const categoriaSelect = document.createElement('select');
           categoriaSelect.id = 'categoria-select';
@@ -66,23 +69,43 @@ export function formularioCargarMas() {
           textoIFD.id = 'texto-ifd';
           textoIFD.textContent = 'Deadline:';
           textoIFD.style.fontFamily = 'Roboto Condensed';
+          textoIFD.style.marginRight = '8px';
 
     const inputFechaDeadline = document.createElement('input');
           inputFechaDeadline.type = 'date';
           inputFechaDeadline.id = 'input-fecha-deadline';
           inputFechaDeadline.style.fontFamily = 'Roboto Condensed';
           inputFechaDeadline.style.fontSize = '14px';
+          inputFechaDeadline.style.width = '95px';
+          inputFechaDeadline.style.marginRight = '8px';
+          inputFechaDeadline.style.borderRadius = '8px';
+          inputFechaDeadline.style.paddingTop = '3px';
+          inputFechaDeadline.style.paddingBottom = '4px';
+          inputFechaDeadline.style.paddingLeft = '3px';
     
     const textoBM = document.createElement('p');
           textoBM.id = 'texto-bm';
           textoBM.textContent = 'A cargo de:'
           textoBM.style.fontFamily = 'Roboto Condensed';
+          textoBM.style.marginRight = '8px';
 
     const botonMultiselect = document.createElement('button');
           botonMultiselect.id = 'boton-multiselect';
           botonMultiselect.textContent = 'Multiselect'
           botonMultiselect.style.fontFamily = 'Roboto Condensed';
           botonMultiselect.style.fontSize = '14px';
+          botonMultiselect.style.width = '220px';
+          botonMultiselect.style.borderRadius = '8px';
+          botonMultiselect.style.paddingTop = '5px';
+          botonMultiselect.style.paddingBottom = '5px';
+              
+          let mostrarCheckSelector = false;
+          botonMultiselect.addEventListener("click", () => {
+            const positionX = botonMultiselect.offsetLeft;
+            const positionY = botonMultiselect.offsetTop + botonMultiselect.offsetHeight;
+            mostrarCheckSelector = !mostrarCheckSelector;
+            checkSelector(positionX, positionY, 0, mostrarCheckSelector);
+          })
 
 
     const botonesContainer = document.createElement('div');
